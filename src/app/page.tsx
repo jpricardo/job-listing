@@ -1,81 +1,94 @@
-import Image from 'next/image';
-import { memo } from 'react';
+'use client';
+import { useQuery } from '@tanstack/react-query';
+import { Col, Flex, Row } from 'antd';
+import { memo, useMemo, useState } from 'react';
 
-import styles from './page.module.css';
+import Controls from '@/components/Controls';
+import SearchBar from '@/components/inputs/SearchBar';
+import JobDetails from '@/components/JobDetails';
+import JobList from '@/components/JobList';
+import { OrderByType } from '@/lib';
+import JobService from '@/services/JobService';
+import Pagination from '@/components/Pagination';
+import Header from '@/components/Header';
 
 function Home() {
+	// Controls
+	const [activeId, setActiveId] = useState<number>();
+	const [searchTerm, setSearchTerm] = useState('');
+	const [orderBy, setOrderBy] = useState<OrderByType>('Most relevant');
+
+	// Pagination
+	// TODO - The user must control this setting
+	const [itemsPerPage] = useState(10);
+	const [currentPage, setCurrentPage] = useState(0);
+
+	// Data
+	const jobService = new JobService();
+	const { data, isPending } = useQuery({ queryKey: ['job'], queryFn: jobService.getAllJobs });
+
+	const filteredData = useMemo(() => {
+		return data
+			?.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()))
+			.sort((a, b) => {
+				if (orderBy === 'Most recent') return b.createdAt.getDate() - a.createdAt.getDate();
+				if (orderBy === 'Best pay') return b.yearlySalary - a.yearlySalary;
+
+				return 1;
+			});
+	}, [data, searchTerm, orderBy]);
+
 	return (
-		<main className={styles.main}>
-			<div className={styles.description}>
-				<p>
-					Get started by editing&nbsp;
-					<code className={styles.code}>src/app/page.tsx</code>
-				</p>
-				<div>
-					<a
-						href='https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
-						target='_blank'
-						rel='noopener noreferrer'
-					>
-						By{' '}
-						<Image src='/vercel.svg' alt='Vercel Logo' className={styles.vercelLogo} width={100} height={24} priority />
-					</a>
-				</div>
-			</div>
+		<main style={{ padding: '1rem 4rem' }}>
+			<Row gutter={[16, 16]}>
+				<Col span={24}>
+					<Header />
+				</Col>
 
-			<div className={styles.center}>
-				<Image className={styles.logo} src='/next.svg' alt='Next.js Logo' width={180} height={37} priority />
-			</div>
+				<Col lg={4}>
+					<Controls
+						orderBy={orderBy}
+						onOrderByChange={(e) => {
+							//@ts-ignore
+							// TODO - Fix this type
+							setOrderBy(e.target.value);
+						}}
+					/>
+				</Col>
 
-			<div className={styles.grid}>
-				<a
-					href='https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
-					className={styles.card}
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					<h2>
-						Docs <span>-&gt;</span>
-					</h2>
-					<p>Find in-depth information about Next.js features and API.</p>
-				</a>
+				<Col lg={8}>
+					<Flex gap='1rem' vertical>
+						<SearchBar value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
 
-				<a
-					href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
-					className={styles.card}
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					<h2>
-						Learn <span>-&gt;</span>
-					</h2>
-					<p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-				</a>
+						<Pagination
+							currentPage={currentPage}
+							pageAmmount={Math.ceil((filteredData?.length ?? 0) / itemsPerPage)}
+							onClick={(value) => setCurrentPage(value)}
+							onNextPage={() => setCurrentPage((value) => value + 1)}
+							onPreviousPage={() => setCurrentPage((value) => value - 1)}
+						/>
 
-				<a
-					href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
-					className={styles.card}
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					<h2>
-						Templates <span>-&gt;</span>
-					</h2>
-					<p>Explore starter templates for Next.js.</p>
-				</a>
+						<JobList
+							currentPage={currentPage}
+							itemsPerPage={itemsPerPage}
+							items={filteredData}
+							activeId={activeId}
+							setActiveId={setActiveId}
+							loading={isPending}
+						/>
 
-				<a
-					href='https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
-					className={styles.card}
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					<h2>
-						Deploy <span>-&gt;</span>
-					</h2>
-					<p>Instantly deploy your Next.js site to a shareable URL with Vercel.</p>
-				</a>
-			</div>
+						<Pagination
+							currentPage={currentPage}
+							pageAmmount={Math.ceil((filteredData?.length ?? 0) / itemsPerPage)}
+							onClick={(value) => setCurrentPage(value)}
+							onNextPage={() => setCurrentPage((value) => value + 1)}
+							onPreviousPage={() => setCurrentPage((value) => value - 1)}
+						/>
+					</Flex>
+				</Col>
+
+				<Col lg={12}>{activeId !== undefined ? <JobDetails jobId={activeId} /> : null}</Col>
+			</Row>
 		</main>
 	);
 }

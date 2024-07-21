@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { memo } from 'react';
@@ -19,7 +20,11 @@ function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<Providers>{children}</Providers>
+				<Providers>
+					<Analytics />
+
+					{children}
+				</Providers>
 			</body>
 		</html>
 	);

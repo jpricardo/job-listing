@@ -5,6 +5,7 @@ import Title from '../typography/Title';
 
 const StyledControlCard = styled.div`
 	padding: 0.25rem;
+	user-select: none;
 `;
 
 type ControlCardProps = React.HtmlHTMLAttributes<HTMLDivElement> & {

@@ -5,11 +5,22 @@ import { JobType } from '@/lib';
 import ControlCard from '../containers/ControlCard';
 import CheckboxGroup from '../inputs/CheckboxGroup';
 
-function JobTypeControl() {
+type JobTypeControlProps = {
+	value: JobType[];
+	onChange: (value: JobType[]) => void;
+};
+
+function JobTypeControl({ value, onChange }: JobTypeControlProps) {
 	const options: JobType[] = ['FullTime', 'Hybrid', 'Remote'];
+
 	return (
 		<ControlCard title='Job type'>
-			<CheckboxGroup options={options} />
+			<CheckboxGroup
+				name='job-type-checkboxgroup'
+				options={options}
+				value={value}
+				onChange={(value) => onChange(value as JobType[])}
+			/>
 		</ControlCard>
 	);
 }

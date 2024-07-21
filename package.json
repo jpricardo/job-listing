@@ -2,6 +2,12 @@
 	"name": "job-listing",
 	"version": "0.1.0",
 	"private": true,
+	"homepage": "https://github.com/jpricardo/job-listing",
+	"author": {
+		"name": "João Pedro",
+		"email": "joaopds.ricardo@gmail.com",
+		"url": "https://github.com/jpricardo"
+	},
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",

@@ -12,7 +12,7 @@ type JobListProps = {
 	items?: Job[];
 
 	activeId: number | undefined;
-	setActiveId: Dispatch<SetStateAction<number | undefined>>;
+	setActiveId: (id?: number) => void;
 
 	loading?: boolean;
 };

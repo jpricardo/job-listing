@@ -12,6 +12,7 @@ type PaginationProps = {
 	onNextPage: React.HtmlHTMLAttributes<HTMLButtonElement>['onClick'];
 };
 
+// TODO - Solve the overflowing pagination issue
 function Pagination({ pageAmmount, currentPage, onClick, onPreviousPage, onNextPage }: PaginationProps) {
 	const pages = Array.from({ length: pageAmmount }, (_, index) => index + 1);
 

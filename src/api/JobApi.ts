@@ -1,4 +1,4 @@
-import { AreaType, getRandomNumber, Job, JobType, SeniorityLevelType } from '@/lib';
+import { AreaType, getRandomNumber, getRandomSample, Job, JobType, SeniorityLevelType } from '@/lib';
 
 import BaseApi from './BaseApi';
 
@@ -13,6 +13,41 @@ const getRandomJob = (index: number): Job => {
 	const jobTypes: JobType[] = ['FullTime', 'Hybrid', 'Remote'];
 	const areaTypes: AreaType[] = ['Design', 'DevOps', 'Development', 'Management', 'QA'];
 	const seniorityLevelTypes: SeniorityLevelType[] = ['Junior', 'Associate', 'Senior', 'Lead'];
+	const allTags: string[] = [
+		'Agile',
+		'Startup',
+		'Azure',
+		'Kubernetes',
+		'AI',
+		'Big Data',
+		'Kanban',
+		'React',
+		'Git',
+		'Sonarqube',
+		'C#',
+		'Diverse team',
+		'Rust',
+		'C++',
+		'.Net',
+		'Java',
+		'Fullstack',
+		'Frontend',
+		'Backend',
+		'GCC',
+		'Figma',
+		'OOP',
+		'TypeScript',
+		'JavaScript',
+		'Elixir',
+		'Python',
+		'Docker',
+		'Gitflow',
+		'CI/CD',
+		'UI/UX',
+		'Microsoft Clarity',
+		'Vercel',
+		'SEO',
+	];
 
 	return {
 		id: index,
@@ -29,7 +64,7 @@ const getRandomJob = (index: number): Job => {
 		areaType: areaTypes[getRandomNumber(0, areaTypes.length)],
 		seniorityLevel: seniorityLevelTypes[getRandomNumber(0, seniorityLevelTypes.length)],
 
-		tags: ['Agile', 'Startup'],
+		tags: getRandomSample(allTags, 3),
 	};
 };
 

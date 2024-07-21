@@ -7,6 +7,7 @@ import JobService from '@/services/JobService';
 import Container from './containers/Container';
 import Button from './inputs/Button';
 import Body from './typography/Body';
+import Title from './typography/Title';
 
 type JobDetailsProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
 	jobId?: number;
@@ -20,9 +21,16 @@ function JobDetails({ jobId, ...props }: JobDetailsProps) {
 	return isPending ? (
 		'Loading...'
 	) : (
-		<Container title={data?.title} addon={<Button variant='primary'>Favorite</Button>} {...props}>
-			<Flex vertical>
-				<Body>{data?.description}</Body>
+		<Container
+			title={`${data?.title} - ${data?.company}`}
+			addon={<Button variant='primary'>Favorite</Button>}
+			{...props}
+		>
+			<Flex gap='1rem' vertical>
+				<Title>{data?.shortDescription}</Title>
+				<Body size='large' style={{ whiteSpace: 'break-spaces' }}>
+					{data?.description}
+				</Body>
 			</Flex>
 		</Container>
 	);

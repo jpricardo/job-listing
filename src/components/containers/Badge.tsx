@@ -4,6 +4,8 @@ import styled from 'styled-components';
 const StyledBadge = styled.div`
 	padding: 0.25rem 0.25rem;
 	border-radius: 0.25rem;
+
+	background: #fefefe;
 	border: 1px solid #c3c3c3;
 
 	font-size: 0.75rem;

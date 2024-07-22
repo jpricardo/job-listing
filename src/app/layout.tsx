@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { memo } from 'react';
@@ -20,11 +21,9 @@ function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<Providers>
-					<Analytics />
-
-					{children}
-				</Providers>
+				<Providers>{children}</Providers>
+				<SpeedInsights />
+				<Analytics />
 			</body>
 		</html>
 	);

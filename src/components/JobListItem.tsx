@@ -61,62 +61,61 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 		<StyledJobListItem hover $active={active} {...props}>
 			<Flex gap='1rem' vertical>
 				<Flex gap='0.5rem' vertical>
-					<Flex gap='1rem' align='center'>
-						<Title>{data.title}</Title>
+					<Flex gap='0.25rem' vertical>
+						<Flex gap='1rem' align='center'>
+							<Title>{data.title}</Title>
 
-						<Flex flex={1}>
-							<Badge
-								content={NumberFormatter.format(data.yearlySalary, 'USD')}
-								style={{ backgroundColor: '#155e28', color: 'white', borderColor: '#155e28' }}
-							/>
+							<Flex flex={1}>
+								<Badge
+									content={NumberFormatter.format(data.yearlySalary, 'USD')}
+									style={{ backgroundColor: '#155e28', color: 'white', borderColor: '#155e28' }}
+								/>
+							</Flex>
+
+							<Footnote>
+								{daysAgo === 0 && 'Today'}
+								{daysAgo === 1 && 'Yesterday'}
+								{daysAgo > 1 && <>{daysAgo} days ago</>}
+							</Footnote>
 						</Flex>
-
-						<Footnote>
-							{daysAgo === 0 && 'Today'}
-							{daysAgo === 1 && 'Yesterday'}
-							{daysAgo > 1 && <>{daysAgo} days ago</>}
-						</Footnote>
+						<Footnote>{data.company}</Footnote>
 					</Flex>
 
-					<Flex gap='1rem' align='center'>
-						<Footnote>{data.company}</Footnote>
+					<Flex gap='0.25rem' align='center' wrap>
+						<Badge
+							content={data.areaType}
+							style={{
+								background: areaTypeColors[data.areaType].bg,
+								borderColor: areaTypeColors[data.areaType].bg,
+								color: areaTypeColors[data.areaType].color,
+							}}
+						/>
 
-						<Flex gap='0.25rem' align='center'>
+						<Badge
+							content={data.jobType}
+							style={{
+								background: jobTypeColors[data.jobType].bg,
+								borderColor: jobTypeColors[data.jobType].bg,
+								color: jobTypeColors[data.jobType].color,
+							}}
+						/>
+
+						<Badge
+							content={data.seniorityLevel}
+							style={{
+								background: seniorityLevelColors[data.seniorityLevel].bg,
+								borderColor: seniorityLevelColors[data.seniorityLevel].bg,
+								color: seniorityLevelColors[data.seniorityLevel].color,
+							}}
+						/>
+
+						{data.tags.map((tag) => (
 							<Badge
-								content={data.areaType}
-								style={{
-									background: areaTypeColors[data.areaType].bg,
-									borderColor: areaTypeColors[data.areaType].bg,
-									color: areaTypeColors[data.areaType].color,
-								}}
+								key={tag}
+								content={tag}
+								style={{ background: '#f3f3f3', borderColor: '#f3f3f3', color: 'black' }}
 							/>
-
-							<Badge
-								content={data.jobType}
-								style={{
-									background: jobTypeColors[data.jobType].bg,
-									borderColor: jobTypeColors[data.jobType].bg,
-									color: jobTypeColors[data.jobType].color,
-								}}
-							/>
-
-							<Badge
-								content={data.seniorityLevel}
-								style={{
-									background: seniorityLevelColors[data.seniorityLevel].bg,
-									borderColor: seniorityLevelColors[data.seniorityLevel].bg,
-									color: seniorityLevelColors[data.seniorityLevel].color,
-								}}
-							/>
-
-							{data.tags.map((tag) => (
-								<Badge
-									key={tag}
-									content={tag}
-									style={{ background: '#f3f3f3', borderColor: '#f3f3f3', color: 'black' }}
-								/>
-							))}
-						</Flex>
+						))}
 					</Flex>
 				</Flex>
 

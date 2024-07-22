@@ -1,7 +1,7 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import { Col, Flex, Row } from 'antd';
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo, useTransition } from 'react';
 
 import Controls from '@/components/Controls';
 import Header from '@/components/Header';
@@ -30,6 +30,9 @@ type DispatchData = {
 
 function Home() {
 	const isMobile = useIsMobile();
+
+	// Reducer
+	const [_, startTransition] = useTransition();
 	const [state, dispatch] = useObjectReducer<DispatchData>({
 		searchTerm: '',
 		orderBy: 'Most relevant',
@@ -39,6 +42,11 @@ function Home() {
 		itemsPerPage: 10,
 		currentPage: 0,
 	});
+
+	const doUpdate = useCallback(
+		(value: Partial<DispatchData>) => startTransition(() => dispatch({ type: 'update', value })),
+		[dispatch],
+	);
 
 	// Data
 	const jobService = new JobService();
@@ -66,8 +74,8 @@ function Home() {
 
 	useEffect(() => {
 		if (!sortedData?.length) return;
-		dispatch({ type: 'update', value: { currentPage: 0 } });
-	}, [sortedData?.length, dispatch]);
+		doUpdate({ currentPage: 0 });
+	}, [sortedData?.length, doUpdate]);
 
 	return (
 		<main style={{ padding: isMobile ? '0.5rem' : `1rem 2rem'}` }}>
@@ -86,25 +94,22 @@ function Home() {
 							dispatch({ type: 'update', value: { orderBy: e.target.value } });
 						}}
 						jobTypes={state.jobTypes}
-						onJobTypesChange={(value) => dispatch({ type: 'update', value: { jobTypes: value } })}
+						onJobTypesChange={(value) => doUpdate({ jobTypes: value })}
 						areaTypes={state.areaTypes}
-						onAreaTypesChange={(value) => dispatch({ type: 'update', value: { areaTypes: value } })}
+						onAreaTypesChange={(value) => doUpdate({ areaTypes: value })}
 					/>
 				</Col>
 
 				<Col xs={24} lg={16} xl={10} xxl={8}>
 					<Flex gap='1rem' vertical>
-						<SearchBar
-							value={state.searchTerm}
-							onChange={(e) => dispatch({ type: 'update', value: { searchTerm: e.target.value } })}
-						/>
+						<SearchBar value={state.searchTerm} onChange={(e) => doUpdate({ searchTerm: e.target.value })} />
 
 						<Pagination
 							currentPage={state.currentPage}
 							pageAmmount={pageAmmount}
-							onClick={(page) => dispatch({ type: 'update', value: { currentPage: page } })}
-							onNextPage={() => dispatch({ type: 'update', value: { currentPage: state.currentPage + 1 } })}
-							onPreviousPage={() => dispatch({ type: 'update', value: { currentPage: state.currentPage - 1 } })}
+							onClick={(page) => doUpdate({ currentPage: page })}
+							onNextPage={() => doUpdate({ currentPage: state.currentPage + 1 })}
+							onPreviousPage={() => doUpdate({ currentPage: state.currentPage - 1 })}
 						/>
 
 						<JobList
@@ -112,16 +117,16 @@ function Home() {
 							itemsPerPage={state.itemsPerPage}
 							items={sortedData}
 							activeId={state.activeId}
-							setActiveId={(id) => dispatch({ type: 'update', value: { activeId: id } })}
+							setActiveId={(id) => doUpdate({ activeId: id })}
 							loading={isPending}
 						/>
 
 						<Pagination
 							currentPage={state.currentPage}
 							pageAmmount={pageAmmount}
-							onClick={(page) => dispatch({ type: 'update', value: { currentPage: page } })}
-							onNextPage={() => dispatch({ type: 'update', value: { currentPage: state.currentPage + 1 } })}
-							onPreviousPage={() => dispatch({ type: 'update', value: { currentPage: state.currentPage - 1 } })}
+							onClick={(page) => doUpdate({ currentPage: page })}
+							onNextPage={() => doUpdate({ currentPage: state.currentPage + 1 })}
+							onPreviousPage={() => doUpdate({ currentPage: state.currentPage - 1 })}
 						/>
 					</Flex>
 				</Col>

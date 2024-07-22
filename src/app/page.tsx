@@ -1,7 +1,7 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import { Col, Flex, Row } from 'antd';
-import { memo, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 
 import Controls from '@/components/Controls';
 import Header from '@/components/Header';
@@ -48,23 +48,35 @@ function Home() {
 		return data
 			?.filter((item) => item.title.toLowerCase().includes(state.searchTerm.toLowerCase()))
 			.filter((item) => state.jobTypes.length === 0 || state.jobTypes.includes(item.jobType))
-			.filter((item) => state.areaTypes.length === 0 || state.areaTypes.includes(item.areaType))
-			.sort((a, b) => {
-				if (state.orderBy === 'Most recent') return b.createdAt.getDate() - a.createdAt.getDate();
-				if (state.orderBy === 'Best pay') return b.yearlySalary - a.yearlySalary;
-
-				return 1;
-			});
+			.filter((item) => state.areaTypes.length === 0 || state.areaTypes.includes(item.areaType));
 	}, [data, state]);
 
+	const sortedData = useMemo(() => {
+		return filteredData?.sort((a, b) => {
+			if (state.orderBy === 'Most recent') return b.createdAt.getTime() - a.createdAt.getTime();
+			if (state.orderBy === 'Best pay') return b.yearlySalary - a.yearlySalary;
+
+			return 1;
+		});
+	}, [filteredData, state]);
+
+	const pageAmmount = useMemo(() => {
+		return Math.ceil((sortedData?.length ?? 0) / state.itemsPerPage);
+	}, [state.itemsPerPage, sortedData?.length]);
+
+	useEffect(() => {
+		if (!sortedData?.length) return;
+		dispatch({ type: 'update', value: { currentPage: 0 } });
+	}, [sortedData?.length, dispatch]);
+
 	return (
-		<main style={{ padding: `1rem ${isMobile ? '1rem' : '2rem'}` }}>
+		<main style={{ padding: isMobile ? '0.5rem' : `1rem 2rem'}` }}>
 			<Row gutter={[16, 16]}>
 				<Col span={24}>
 					<Header />
 				</Col>
 
-				<Col xs={24} lg={8} xl={6}>
+				<Col xs={24} lg={8} xl={6} xxl={4}>
 					<Controls
 						onReset={() => dispatch({ type: 'reset' })}
 						orderBy={state.orderBy}
@@ -89,7 +101,7 @@ function Home() {
 
 						<Pagination
 							currentPage={state.currentPage}
-							pageAmmount={Math.ceil((filteredData?.length ?? 0) / state.itemsPerPage)}
+							pageAmmount={pageAmmount}
 							onClick={(page) => dispatch({ type: 'update', value: { currentPage: page } })}
 							onNextPage={() => dispatch({ type: 'update', value: { currentPage: state.currentPage + 1 } })}
 							onPreviousPage={() => dispatch({ type: 'update', value: { currentPage: state.currentPage - 1 } })}
@@ -98,7 +110,7 @@ function Home() {
 						<JobList
 							currentPage={state.currentPage}
 							itemsPerPage={state.itemsPerPage}
-							items={filteredData}
+							items={sortedData}
 							activeId={state.activeId}
 							setActiveId={(id) => dispatch({ type: 'update', value: { activeId: id } })}
 							loading={isPending}
@@ -106,7 +118,7 @@ function Home() {
 
 						<Pagination
 							currentPage={state.currentPage}
-							pageAmmount={Math.ceil((filteredData?.length ?? 0) / state.itemsPerPage)}
+							pageAmmount={pageAmmount}
 							onClick={(page) => dispatch({ type: 'update', value: { currentPage: page } })}
 							onNextPage={() => dispatch({ type: 'update', value: { currentPage: state.currentPage + 1 } })}
 							onPreviousPage={() => dispatch({ type: 'update', value: { currentPage: state.currentPage - 1 } })}
@@ -114,7 +126,7 @@ function Home() {
 					</Flex>
 				</Col>
 
-				<Col xs={24} xl={8} xxl={10}>
+				<Col xs={24} xl={8} xxl={12}>
 					{state.activeId !== undefined ? <JobDetails jobId={state.activeId} /> : null}
 				</Col>
 			</Row>

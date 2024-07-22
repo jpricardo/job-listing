@@ -50,7 +50,7 @@ function Home() {
 
 	// Data
 	const jobService = new JobService();
-	const { data, isPending } = useQuery({ queryKey: ['job'], queryFn: () => jobService.getAllJobs() });
+	const { data, isPending } = useQuery({ queryKey: ['job'], queryFn: () => jobService.getAll() });
 
 	const filteredData = useMemo(() => {
 		return data

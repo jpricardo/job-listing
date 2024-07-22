@@ -15,7 +15,7 @@ type JobDetailsProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & 
 
 function JobDetails({ jobId, ...props }: JobDetailsProps) {
 	const jobService = new JobService();
-	const { data, isPending } = useQuery({ queryKey: ['job', jobId], queryFn: () => jobService.getJobById(jobId) });
+	const { data, isPending } = useQuery({ queryKey: ['job', jobId], queryFn: () => jobService.getById(jobId) });
 
 	// TODO - Loading state
 	return isPending ? (

@@ -1,17 +1,20 @@
 'use client';
-import { Col, Flex, Row } from 'antd';
+import { Col, Flex, Grid, Row } from 'antd';
 import { memo, useCallback, useEffect, useMemo, useTransition } from 'react';
 
 import Controls from '@/components/Controls';
 import Header from '@/components/Header';
 import SearchBar from '@/components/inputs/SearchBar';
 import JobDetailsCard from '@/components/JobDetailsCard';
+import JobDetailsModal from '@/components/JobDetailsModal';
 import JobList from '@/components/JobList';
 import Pagination from '@/components/Pagination';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import useObjectReducer from '@/hooks/useObjectReducer';
 import { AreaType, JobType, OrderByType } from '@/lib';
 import useAllJobsQuery from '@/queries/useAllJobsQuery';
+
+const { useBreakpoint } = Grid;
 
 type DispatchData = {
 	// Controls
@@ -29,6 +32,8 @@ type DispatchData = {
 
 function Home() {
 	const isMobile = useIsMobile();
+	const breakpoint = useBreakpoint();
+	const isLargeScreen = breakpoint.xl;
 
 	// Reducer
 	const [_, startTransition] = useTransition();
@@ -129,9 +134,17 @@ function Home() {
 					</Flex>
 				</Col>
 
-				<Col xs={24} xl={8} xxl={12}>
-					{state.activeId !== undefined ? <JobDetailsCard jobId={state.activeId} /> : null}
-				</Col>
+				{state.activeId !== undefined && (
+					<>
+						{isLargeScreen ? (
+							<Col xs={0} xl={8} xxl={12}>
+								<JobDetailsCard jobId={state.activeId} />
+							</Col>
+						) : (
+							<JobDetailsModal jobId={state.activeId} onClose={() => doUpdate({ activeId: undefined })} open />
+						)}
+					</>
+				)}
 			</Row>
 		</main>
 	);

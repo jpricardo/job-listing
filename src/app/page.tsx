@@ -1,18 +1,17 @@
 'use client';
-import { useQuery } from '@tanstack/react-query';
 import { Col, Flex, Row } from 'antd';
 import { memo, useCallback, useEffect, useMemo, useTransition } from 'react';
 
 import Controls from '@/components/Controls';
 import Header from '@/components/Header';
 import SearchBar from '@/components/inputs/SearchBar';
-import JobDetails from '@/components/JobDetails';
+import JobDetailsCard from '@/components/JobDetailsCard';
 import JobList from '@/components/JobList';
 import Pagination from '@/components/Pagination';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import useObjectReducer from '@/hooks/useObjectReducer';
 import { AreaType, JobType, OrderByType } from '@/lib';
-import JobService from '@/services/JobService';
+import useAllJobsQuery from '@/queries/useAllJobsQuery';
 
 type DispatchData = {
 	// Controls
@@ -49,8 +48,7 @@ function Home() {
 	);
 
 	// Data
-	const jobService = new JobService();
-	const { data, isPending } = useQuery({ queryKey: ['job'], queryFn: () => jobService.getAll() });
+	const { data, isPending } = useAllJobsQuery();
 
 	const filteredData = useMemo(() => {
 		return data
@@ -132,7 +130,7 @@ function Home() {
 				</Col>
 
 				<Col xs={24} xl={8} xxl={12}>
-					{state.activeId !== undefined ? <JobDetails jobId={state.activeId} /> : null}
+					{state.activeId !== undefined ? <JobDetailsCard jobId={state.activeId} /> : null}
 				</Col>
 			</Row>
 		</main>

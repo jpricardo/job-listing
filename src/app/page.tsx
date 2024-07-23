@@ -1,6 +1,6 @@
 'use client';
 import { Col, Flex, Grid, Row } from 'antd';
-import { memo, useCallback, useEffect, useMemo, useTransition } from 'react';
+import { memo, useCallback, useMemo, useTransition } from 'react';
 
 import Controls from '@/components/Controls';
 import Header from '@/components/Header';
@@ -74,11 +74,6 @@ function Home() {
 	const pageAmmount = useMemo(() => {
 		return Math.ceil((sortedData?.length ?? 0) / state.itemsPerPage);
 	}, [state.itemsPerPage, sortedData?.length]);
-
-	useEffect(() => {
-		if (!sortedData?.length) return;
-		doUpdate({ currentPage: 0 });
-	}, [sortedData?.length, doUpdate]);
 
 	return (
 		<main style={{ padding: isMobile ? '0.5rem' : `1rem 2rem'}` }}>

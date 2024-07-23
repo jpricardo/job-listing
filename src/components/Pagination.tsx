@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 import Button from './inputs/Button';
 
@@ -14,6 +14,8 @@ type PaginationProps = {
 
 // TODO - Solve the overflowing pagination issue
 function Pagination({ pageAmmount, currentPage, onClick, onPreviousPage, onNextPage }: PaginationProps) {
+	useEffect(() => onClick(0), [pageAmmount]);
+
 	const pages = Array.from({ length: pageAmmount }, (_, index) => index + 1);
 
 	return (

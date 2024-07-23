@@ -91,7 +91,7 @@ function Home() {
 						onOrderByChange={(e) => {
 							//@ts-ignore
 							// TODO - Fix this type
-							dispatch({ type: 'update', value: { orderBy: e.target.value } });
+							doUpdate({ orderBy: e.target.value });
 						}}
 						jobTypes={state.jobTypes}
 						onJobTypesChange={(value) => doUpdate({ jobTypes: value })}

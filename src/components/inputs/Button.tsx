@@ -52,7 +52,7 @@ const StyledButton = styled.button<{ $variant: VariantType }>`
 	}};
 `;
 
-type ButtonProps = React.HtmlHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 	variant?: VariantType;
 };
 function Button({ variant = 'default', ...props }: ButtonProps) {

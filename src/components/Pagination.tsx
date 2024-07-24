@@ -20,8 +20,6 @@ function Pagination({ pageAmmount, currentPage, onClick, onPreviousPage, onNextP
 
 	return (
 		<Flex align='center' gap='0.25rem'>
-			{/* TODO - Solve this bug */}
-			{/* @ts-ignore */}
 			<Button onClick={onPreviousPage} disabled={currentPage === 0}>
 				{'<'}
 			</Button>
@@ -44,8 +42,6 @@ function Pagination({ pageAmmount, currentPage, onClick, onPreviousPage, onNextP
 				})}
 			</Flex>
 
-			{/* TODO - Solve this bug */}
-			{/* @ts-ignore */}
 			<Button onClick={onNextPage} disabled={currentPage === pageAmmount - 1}>
 				{'>'}
 			</Button>

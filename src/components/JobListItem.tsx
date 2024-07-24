@@ -66,10 +66,9 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 							<Title>{data.title}</Title>
 
 							<Flex flex={1}>
-								<Badge
-									content={NumberFormatter.format(data.yearlySalary, 'USD')}
-									style={{ backgroundColor: '#155e28', color: 'white', borderColor: '#155e28' }}
-								/>
+								<Badge style={{ backgroundColor: '#155e28', color: 'white', borderColor: '#155e28' }}>
+									<>{NumberFormatter.format(data.yearlySalary, 'USD')} /yr</>
+								</Badge>
 							</Flex>
 
 							<Footnote>
@@ -83,38 +82,39 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 
 					<Flex gap='0.25rem' align='center' wrap>
 						<Badge
-							content={data.areaType}
 							style={{
 								background: areaTypeColors[data.areaType].bg,
 								borderColor: areaTypeColors[data.areaType].bg,
 								color: areaTypeColors[data.areaType].color,
 							}}
-						/>
+						>
+							{data.areaType}
+						</Badge>
 
 						<Badge
-							content={data.jobType}
 							style={{
 								background: jobTypeColors[data.jobType].bg,
 								borderColor: jobTypeColors[data.jobType].bg,
 								color: jobTypeColors[data.jobType].color,
 							}}
-						/>
+						>
+							{data.jobType}
+						</Badge>
 
 						<Badge
-							content={data.seniorityLevel}
 							style={{
 								background: seniorityLevelColors[data.seniorityLevel].bg,
 								borderColor: seniorityLevelColors[data.seniorityLevel].bg,
 								color: seniorityLevelColors[data.seniorityLevel].color,
 							}}
-						/>
+						>
+							{data.seniorityLevel}
+						</Badge>
 
 						{data.tags.map((tag) => (
-							<Badge
-								key={tag}
-								content={tag}
-								style={{ background: '#f3f3f3', borderColor: '#f3f3f3', color: 'black' }}
-							/>
+							<Badge key={tag} style={{ background: '#f3f3f3', borderColor: '#f3f3f3', color: 'black' }}>
+								{tag}
+							</Badge>
 						))}
 					</Flex>
 				</Flex>

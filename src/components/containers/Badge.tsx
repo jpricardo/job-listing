@@ -12,11 +12,9 @@ const StyledBadge = styled.div`
 	line-height: 0.75rem;
 `;
 
-type BadgeProps = Omit<React.HtmlHTMLAttributes<HTMLDivElement>, 'children'> & {
-	content: React.ReactNode;
-};
-function Badge({ content, ...props }: BadgeProps) {
-	return <StyledBadge {...props}>{content}</StyledBadge>;
+type BadgeProps = React.HtmlHTMLAttributes<HTMLDivElement>;
+function Badge({ ...props }: BadgeProps) {
+	return <StyledBadge {...props} />;
 }
 
 export default memo(Badge);

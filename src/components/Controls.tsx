@@ -19,7 +19,7 @@ type ControlsProps = {
 	onReset: () => void;
 
 	orderBy: OrderByType;
-	onOrderByChange: React.HtmlHTMLAttributes<HTMLSelectElement>['onChange'];
+	onOrderByChange: (value: OrderByType) => void;
 
 	jobTypes: JobType[];
 	onJobTypesChange: (value: JobType[]) => void;

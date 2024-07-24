@@ -91,11 +91,7 @@ function Home() {
 					<Controls
 						onReset={() => dispatch({ type: 'reset' })}
 						orderBy={state.orderBy}
-						onOrderByChange={(e) => {
-							//@ts-ignore
-							// TODO - Fix this type
-							dispatch({ type: 'update', value: { orderBy: e.target.value } });
-						}}
+						onOrderByChange={(value) => doUpdate({ orderBy: value })}
 						jobTypes={state.jobTypes}
 						onJobTypesChange={(value) => doUpdate({ jobTypes: value })}
 						areaTypes={state.areaTypes}

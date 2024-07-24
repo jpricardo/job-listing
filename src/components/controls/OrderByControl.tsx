@@ -7,7 +7,7 @@ import Select from '../inputs/Select';
 
 type OrderByControlProps = {
 	value: OrderByType;
-	onChange: React.HtmlHTMLAttributes<HTMLSelectElement>['onChange'];
+	onChange: (value: OrderByType) => void;
 };
 function OrderByControl({ value, onChange }: OrderByControlProps) {
 	return (

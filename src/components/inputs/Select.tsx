@@ -10,16 +10,21 @@ const StyledSelect = styled.select`
 	border: 1px solid #c3c3c3;
 `;
 
-type OptionType = string | number | { label: React.ReactNode; value: string | number };
+type ValueType = string | number;
+type OptionObjectType = { label: React.ReactNode; value: ValueType };
+type OptionType = ValueType | OptionObjectType;
 
-type SelectProps = Omit<React.HtmlHTMLAttributes<HTMLSelectElement>, 'children'> & {
-	value: string | number;
-	options: OptionType[];
+type OmitProps = 'children' | 'value' | 'onChange';
+type SelectProps<T extends OptionType> = Omit<React.SelectHTMLAttributes<HTMLSelectElement>, OmitProps> & {
+	options: T[];
+
+	value?: T extends OptionObjectType ? ValueType : T;
+	onChange?: (value: T) => void;
 };
 
-function Select({ options, ...props }: SelectProps) {
+function Select<T extends OptionType>({ options, value, onChange, ...props }: SelectProps<T>) {
 	return (
-		<StyledSelect {...props}>
+		<StyledSelect value={value} onChange={(e) => onChange?.(e.target.value as T)} {...props}>
 			{options.map((item, index) => {
 				return (
 					<option key={index} value={typeof item === 'object' ? item.value : item}>
@@ -31,4 +36,4 @@ function Select({ options, ...props }: SelectProps) {
 	);
 }
 
-export default memo(Select);
+export default memo(Select) as typeof Select;

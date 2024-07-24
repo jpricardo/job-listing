@@ -11,7 +11,7 @@ import JobList from '@/components/JobList';
 import Pagination from '@/components/Pagination';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import useObjectReducer from '@/hooks/useObjectReducer';
-import { AreaType, JobType, OrderByType } from '@/lib';
+import { AreaType, JobType, OrderByType, SeniorityLevelType } from '@/lib';
 import useAllJobsQuery from '@/queries/useAllJobsQuery';
 
 const { useBreakpoint } = Grid;
@@ -23,6 +23,7 @@ type DispatchData = {
 	orderBy: OrderByType;
 	jobTypes: JobType[];
 	areaTypes: AreaType[];
+	seniorityLevelTypes: SeniorityLevelType[];
 
 	// Pagination
 	// TODO - The user must control this setting
@@ -42,6 +43,7 @@ function Home() {
 		orderBy: 'Most relevant',
 		jobTypes: [],
 		areaTypes: [],
+		seniorityLevelTypes: [],
 
 		itemsPerPage: 10,
 		currentPage: 0,
@@ -59,7 +61,10 @@ function Home() {
 		return data
 			?.filter((item) => item.title.toLowerCase().includes(state.searchTerm.toLowerCase()))
 			.filter((item) => state.jobTypes.length === 0 || state.jobTypes.includes(item.jobType))
-			.filter((item) => state.areaTypes.length === 0 || state.areaTypes.includes(item.areaType));
+			.filter((item) => state.areaTypes.length === 0 || state.areaTypes.includes(item.areaType))
+			.filter(
+				(item) => state.seniorityLevelTypes.length === 0 || state.seniorityLevelTypes.includes(item.seniorityLevel),
+			);
 	}, [data, state]);
 
 	const sortedData = useMemo(() => {
@@ -95,6 +100,8 @@ function Home() {
 						onJobTypesChange={(value) => doUpdate({ jobTypes: value })}
 						areaTypes={state.areaTypes}
 						onAreaTypesChange={(value) => doUpdate({ areaTypes: value })}
+						seniorityLevelTypes={state.seniorityLevelTypes}
+						onSeniorityLevelTypesChange={(value) => doUpdate({ seniorityLevelTypes: value })}
 					/>
 				</Col>
 

@@ -14,7 +14,7 @@ function AreaTypeControl({ value, onChange }: AreaTypeControlProps) {
 	const options: AreaType[] = ['Design', 'DevOps', 'Development', 'Management', 'QA'];
 
 	return (
-		<ControlCard title='Area type'>
+		<ControlCard title='Area'>
 			<CheckboxGroup
 				name='area-type-checkboxgroup'
 				options={options}

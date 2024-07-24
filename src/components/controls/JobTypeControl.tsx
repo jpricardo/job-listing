@@ -15,12 +15,7 @@ function JobTypeControl({ value, onChange }: JobTypeControlProps) {
 
 	return (
 		<ControlCard title='Job type'>
-			<CheckboxGroup
-				name='job-type-checkboxgroup'
-				options={options}
-				value={value}
-				onChange={(value) => onChange(value as JobType[])}
-			/>
+			<CheckboxGroup name='job-type-checkboxgroup' options={options} value={value} onChange={onChange} />
 		</ControlCard>
 	);
 }

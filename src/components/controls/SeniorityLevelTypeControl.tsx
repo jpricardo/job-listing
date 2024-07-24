@@ -15,12 +15,7 @@ function SeniorityLevelTypeControl({ value, onChange }: SeniorityLevelTypeContro
 
 	return (
 		<ControlCard title='Area'>
-			<CheckboxGroup
-				name='seniority-level-type-checkboxgroup'
-				options={options}
-				value={value}
-				onChange={(value) => onChange(value as SeniorityLevelType[])}
-			/>
+			<CheckboxGroup name='seniority-level-type-checkboxgroup' options={options} value={value} onChange={onChange} />
 		</ControlCard>
 	);
 }

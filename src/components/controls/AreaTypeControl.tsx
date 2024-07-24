@@ -15,12 +15,7 @@ function AreaTypeControl({ value, onChange }: AreaTypeControlProps) {
 
 	return (
 		<ControlCard title='Area'>
-			<CheckboxGroup
-				name='area-type-checkboxgroup'
-				options={options}
-				value={value}
-				onChange={(value) => onChange(value as AreaType[])}
-			/>
+			<CheckboxGroup name='area-type-checkboxgroup' options={options} value={value} onChange={onChange} />
 		</ControlCard>
 	);
 }

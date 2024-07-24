@@ -5,20 +5,20 @@ import Label from '../typography/Label';
 
 type OptionType = string | number;
 
-type CheckboxGroupProps = {
+type CheckboxGroupProps<T extends OptionType> = {
 	name: string;
 
-	options: OptionType[];
-	value?: OptionType[];
-	onChange?: (value: OptionType[]) => void;
+	options: T[];
+	value?: T[];
+	onChange?: (value: T[]) => void;
 };
 
-function CheckboxGroup({ name, options, value, onChange }: CheckboxGroupProps) {
-	const addOptionToValue = (option: OptionType, value?: OptionType[]) => {
+function CheckboxGroup<T extends OptionType>({ name, options, value, onChange }: CheckboxGroupProps<T>) {
+	const addOptionToValue = (option: T, value?: T[]) => {
 		return [...(value || []), option];
 	};
 
-	const removeOptionFromValue = (option: OptionType, value?: OptionType[]) => {
+	const removeOptionFromValue = (option: T, value?: T[]) => {
 		return value?.filter((item) => option !== item) || [];
 	};
 
@@ -46,4 +46,4 @@ function CheckboxGroup({ name, options, value, onChange }: CheckboxGroupProps) {
 	);
 }
 
-export default memo(CheckboxGroup);
+export default memo(CheckboxGroup) as typeof CheckboxGroup;

@@ -1,12 +1,9 @@
-import { Flex } from 'antd';
+import { Button, Flex, Typography } from '@jpricardo/component-library';
 import { memo } from 'react';
 
 import useJobByIdQuery from '@/queries/useJobByIdQuery';
 
 import Container from './containers/Container';
-import Button from './inputs/Button';
-import Body from './typography/Body';
-import Title from './typography/Title';
 
 type JobDetailsCardProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
 	jobId?: number;
@@ -25,10 +22,10 @@ function JobDetailsCard({ jobId, ...props }: JobDetailsCardProps) {
 			{...props}
 		>
 			<Flex gap='1rem' vertical>
-				<Title>{data?.shortDescription}</Title>
-				<Body size='large' style={{ whiteSpace: 'break-spaces' }}>
+				<Typography.Title>{data?.shortDescription}</Typography.Title>
+				<Typography.Body size='large' style={{ whiteSpace: 'break-spaces' }}>
 					{data?.description}
-				</Body>
+				</Typography.Body>
 			</Flex>
 		</Container>
 	);

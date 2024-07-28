@@ -1,9 +1,9 @@
+import { CheckboxGroup } from '@jpricardo/component-library';
 import { memo } from 'react';
 
 import { JobType } from '@/lib';
 
 import ControlCard from '../containers/ControlCard';
-import CheckboxGroup from '../inputs/CheckboxGroup';
 
 type JobTypeControlProps = {
 	value: JobType[];

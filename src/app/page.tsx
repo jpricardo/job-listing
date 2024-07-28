@@ -1,5 +1,6 @@
 'use client';
-import { Col, Flex, Grid, Row } from 'antd';
+import { Flex, Pagination } from '@jpricardo/component-library';
+import { Col, Grid, Row } from 'antd';
 import { memo, useCallback, useMemo, useTransition } from 'react';
 
 import Controls from '@/components/Controls';
@@ -8,7 +9,6 @@ import SearchBar from '@/components/inputs/SearchBar';
 import JobDetailsCard from '@/components/JobDetailsCard';
 import JobDetailsModal from '@/components/JobDetailsModal';
 import JobList from '@/components/JobList';
-import Pagination from '@/components/Pagination';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import useObjectReducer from '@/hooks/useObjectReducer';
 import { AreaType, JobType, OrderByType, SeniorityLevelType } from '@/lib';

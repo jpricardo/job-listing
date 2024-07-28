@@ -1,11 +1,9 @@
-import { Flex, Modal } from 'antd';
+import { Flex, Typography } from '@jpricardo/component-library';
+import { Modal } from 'antd';
 import { memo } from 'react';
 
 import { useIsMobile } from '@/hooks/useIsMobile';
 import useJobByIdQuery from '@/queries/useJobByIdQuery';
-
-import Body from './typography/Body';
-import Title from './typography/Title';
 
 type JobDetailsModalProps = {
 	jobId?: number;
@@ -26,19 +24,19 @@ function JobDetailsModal({ jobId, open, onClose }: JobDetailsModalProps) {
 			loading={isPending}
 			footer={null}
 			title={
-				<Title>
+				<Typography.Title>
 					{data?.title} - {data?.company}
-				</Title>
+				</Typography.Title>
 			}
 			width={800}
 			style={isMobile ? { top: 0, bottom: 0, padding: '0.5rem' } : {}}
 		>
 			<Flex gap='1rem' vertical>
-				<Title>{data?.shortDescription}</Title>
+				<Typography.Title>{data?.shortDescription}</Typography.Title>
 
-				<Body size='large' style={{ whiteSpace: 'break-spaces' }}>
+				<Typography.Body size='large' style={{ whiteSpace: 'break-spaces' }}>
 					{data?.description}
-				</Body>
+				</Typography.Body>
 			</Flex>
 		</Modal>
 	);

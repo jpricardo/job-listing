@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Button, Flex } from '@jpricardo/component-library';
 import { memo } from 'react';
 
 import { AreaType, JobType, OrderByType, SeniorityLevelType } from '@/lib';
@@ -8,7 +8,6 @@ import Container from './containers/Container';
 import AreaTypeControl from './controls/AreaTypeControl';
 import JobTypeControl from './controls/JobTypeControl';
 import OrderByControl from './controls/OrderByControl';
-import Button from './inputs/Button';
 import SeniorityLevelTypeControl from './controls/SeniorityLevelTypeControl';
 
 type ControlsProps = {

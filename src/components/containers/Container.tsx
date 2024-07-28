@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Flex } from '@jpricardo/component-library';
 import { memo } from 'react';
 import styled from 'styled-components';
 

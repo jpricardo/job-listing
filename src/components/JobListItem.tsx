@@ -1,15 +1,11 @@
-import { Flex } from 'antd';
+import { Badge, Flex, Typography } from '@jpricardo/component-library';
 import React, { memo } from 'react';
 import styled from 'styled-components';
 
 import { AreaType, getDateDifferenceInDays, Job, JobType, SeniorityLevelType } from '@/lib';
 import NumberFormatter from '@/lib/NumberFormatter';
 
-import Badge from './containers/Badge';
 import Container from './containers/Container';
-import Body from './typography/Body';
-import Footnote from './typography/Footnote';
-import Title from './typography/Title';
 
 const StyledJobListItem = styled(Container)<{ $active?: boolean }>(({ $active }) => {
 	const baseProps: React.CSSProperties = {
@@ -63,24 +59,24 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 				<Flex gap='0.5rem' vertical>
 					<Flex gap='0.25rem' vertical>
 						<Flex gap='1rem' align='center'>
-							<Title>{data.title}</Title>
+							<Typography.Title>{data.title}</Typography.Title>
 
-							<Flex flex={1}>
+							<Flex style={{ flex: 1 }}>
 								<Badge style={{ backgroundColor: '#155e28', color: 'white', borderColor: '#155e28' }}>
 									<>{NumberFormatter.format(data.yearlySalary, 'USD')} /yr</>
 								</Badge>
 							</Flex>
 
-							<Footnote>
+							<Typography.Footnote>
 								{daysAgo === 0 && 'Today'}
 								{daysAgo === 1 && 'Yesterday'}
 								{daysAgo > 1 && <>{daysAgo} days ago</>}
-							</Footnote>
+							</Typography.Footnote>
 						</Flex>
-						<Footnote>{data.company}</Footnote>
+						<Typography.Footnote>{data.company}</Typography.Footnote>
 					</Flex>
 
-					<Flex gap='0.25rem' align='center' wrap>
+					<Flex gap='0.25rem' align='center' style={{ flexWrap: 'wrap' }}>
 						<Badge
 							style={{
 								background: areaTypeColors[data.areaType].bg,
@@ -119,7 +115,7 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 					</Flex>
 				</Flex>
 
-				<Body>{data.shortDescription}</Body>
+				<Typography.Body>{data.shortDescription}</Typography.Body>
 			</Flex>
 		</StyledJobListItem>
 	);

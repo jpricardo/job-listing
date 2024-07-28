@@ -12,7 +12,7 @@ export const useQueryClientContext = () => useContext(QueryClientContext);
 
 type Props = { children: React.ReactNode };
 
-export function QueryClientContextProvider({ children }: Props) {
+export default function QueryClientContextProvider({ children }: Props) {
 	const queryClient = useMemo(() => new QueryClient({ defaultOptions: { queries: { staleTime: 60 * 1000 } } }), []);
 
 	useEffect(() => {

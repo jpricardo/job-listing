@@ -1,4 +1,5 @@
 'use client';
+import { useTheme } from 'styled-components';
 import { Flex, Pagination } from '@jpricardo/component-library';
 import { Col, Grid, Row } from 'antd';
 import { memo, useCallback, useMemo, useTransition } from 'react';
@@ -32,6 +33,7 @@ type DispatchData = {
 };
 
 function Home() {
+	const { colors } = useTheme();
 	const isMobile = useIsMobile();
 	const breakpoint = useBreakpoint();
 	const isLargeScreen = breakpoint.xl;
@@ -81,7 +83,7 @@ function Home() {
 	}, [state.itemsPerPage, sortedData?.length]);
 
 	return (
-		<main style={{ padding: isMobile ? '0.5rem' : `1rem 2rem'}` }}>
+		<main style={{ padding: isMobile ? '1rem' : '1rem 2rem', background: colors.surface }}>
 			<Row gutter={[16, 16]}>
 				<Col span={24}>
 					<Header />

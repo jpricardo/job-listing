@@ -18,14 +18,13 @@ function JobDetailsCard({ jobId, ...props }: JobDetailsCardProps) {
 	) : (
 		<Container
 			title={`${data?.title} - ${data?.company}`}
-			addon={<Button variant='primary'>Favorite</Button>}
+			variant='low'
+			addon={<Button variant='primary'>Bookmark</Button>}
 			{...props}
 		>
 			<Flex gap='1rem' vertical>
 				<Typography.Title>{data?.shortDescription}</Typography.Title>
-				<Typography.Body size='large' style={{ whiteSpace: 'break-spaces' }}>
-					{data?.description}
-				</Typography.Body>
+				<Typography.Body style={{ whiteSpace: 'break-spaces' }}>{data?.description}</Typography.Body>
 			</Flex>
 		</Container>
 	);

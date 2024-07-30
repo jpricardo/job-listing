@@ -7,14 +7,12 @@ import NumberFormatter from '@/lib/NumberFormatter';
 
 import Container from './containers/Container';
 
-const StyledJobListItem = styled(Container)<{ $active?: boolean }>(({ $active }) => {
-	const baseProps: React.CSSProperties = {
-		userSelect: 'none',
-		transition: 'all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1)',
-	};
+const StyledJobListItem = styled(Container)<{ $active?: boolean }>`
+	user-select: none;
+	transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 
-	return $active ? { borderColor: '#a3a3a3', backgroundColor: '#f3f3f3', ...baseProps } : { ...baseProps };
-});
+	box-shadow: ${({ $active, theme }) => ($active ? theme.shadows.xs : '')};
+`;
 
 type JobListItemProps = React.HTMLAttributes<HTMLDivElement> & {
 	data: Job;
@@ -54,7 +52,7 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 	const daysAgo = getDateDifferenceInDays(data.createdAt, new Date());
 
 	return (
-		<StyledJobListItem hover $active={active} {...props}>
+		<StyledJobListItem hover variant={active ? 'default' : 'low'} $active={active} {...props}>
 			<Flex gap='1rem' vertical>
 				<Flex gap='0.5rem' vertical>
 					<Flex gap='0.25rem' vertical>
@@ -108,9 +106,7 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 						</Badge>
 
 						{data.tags.map((tag) => (
-							<Badge key={tag} style={{ background: '#f3f3f3', borderColor: '#f3f3f3', color: 'black' }}>
-								{tag}
-							</Badge>
+							<Badge key={tag}>{tag}</Badge>
 						))}
 					</Flex>
 				</Flex>

@@ -1,20 +1,20 @@
-import { Flex, Container as LibContainer, Typography } from '@jpricardo/component-library';
+import {
+	Flex,
+	Container as LibContainer,
+	ContainerProps as LibContainerProps,
+	Typography,
+} from '@jpricardo/component-library';
 import { memo } from 'react';
 import styled, { useTheme } from 'styled-components';
 
 const StyledContainer = styled(LibContainer)<{ $hover?: boolean }>`
-	border: 1px solid ${({ theme }) => theme.colors.outline};
-	background-color: ${({ theme }) => theme.colors.surface};
-	color: ${({ theme }) => theme.colors.onSurface};
-
-	cursor: ${({ $hover }) => ($hover ? 'pointer' : 'initial')};
-
 	&:hover {
-		box-shadow: ${({ $hover, theme }) => ($hover ? theme.shadows.sm : '')};
+		cursor: ${({ $hover }) => ($hover ? 'pointer' : 'initial')};
+		box-shadow: ${({ $hover, theme }) => ($hover ? theme.shadows.xs : '')};
 	}
 `;
 
-type ContainerProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
+type ContainerProps = LibContainerProps & {
 	title?: React.ReactNode;
 	addon?: React.ReactNode;
 	hover?: boolean;
@@ -28,12 +28,7 @@ function Container({ title, addon, children, hover, ...props }: ContainerProps) 
 				<Flex
 					justify='space-between'
 					align='center'
-					style={{
-						borderBottom: `1px solid ${colors.outline}`,
-						padding: '1rem',
-						margin: '-1rem -1rem 1rem',
-						backgroundColor: '#f0f0f0',
-					}}
+					style={{ padding: '1rem', margin: '-1rem -1rem 1rem', backgroundColor: colors.containerHigh }}
 				>
 					<Typography.Title>{title}</Typography.Title>
 

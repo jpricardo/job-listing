@@ -42,7 +42,7 @@ function Controls({
 	...props
 }: ControlsProps) {
 	return (
-		<Container title='Filter' addon={<Button onClick={onReset}>Clear all</Button>} {...props}>
+		<Container title='Filter' variant='low' addon={<Button onClick={onReset}>Clear all</Button>} {...props}>
 			<Flex gap='0.5rem' vertical>
 				<OrderByControl value={orderBy} onChange={onOrderByChange} />
 				<Divider />

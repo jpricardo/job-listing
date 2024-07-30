@@ -100,6 +100,7 @@ function Home() {
 						onAreaTypesChange={(value) => doUpdate({ areaTypes: value })}
 						seniorityLevelTypes={state.seniorityLevelTypes}
 						onSeniorityLevelTypesChange={(value) => doUpdate({ seniorityLevelTypes: value })}
+						style={isMobile ? {} : { position: 'sticky', top: '1rem' }}
 					/>
 				</Col>
 

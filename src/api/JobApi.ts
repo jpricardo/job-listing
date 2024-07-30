@@ -85,7 +85,7 @@ const getRandomJobs = (ammount: number) => {
 };
 
 // In reality, this would be managed by the application's backend
-const allJobs = getRandomJobs(45);
+const allJobs = getRandomJobs(69);
 
 export interface IJobApi {
 	getJobs: () => Promise<Job[]>;

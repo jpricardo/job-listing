@@ -1,5 +1,5 @@
 'use client';
-import { lightTheme } from '@jpricardo/component-library';
+import { ThemeBuilder } from '@jpricardo/component-library';
 import { memo } from 'react';
 
 import QueryClientContextProvider from '@/context/QueryClientContext';
@@ -7,7 +7,7 @@ import ThemeContextProvider from '@/context/ThemeContext';
 
 type ProvidersProps = { children: React.ReactNode };
 function Providers({ children }: ProvidersProps) {
-	const theme = lightTheme;
+	const theme = ThemeBuilder.getLightTheme();
 
 	return (
 		<ThemeContextProvider theme={theme}>

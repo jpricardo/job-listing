@@ -1,9 +1,9 @@
-import { TextInput, TextInputProps } from '@jpricardo/component-library';
+import { Input, InputProps } from '@jpricardo/component-library';
 import { memo } from 'react';
 
-type SearchBarProps = TextInputProps;
+type SearchBarProps = InputProps;
 function SearchBar({ style, ...props }: SearchBarProps) {
-	return <TextInput placeholder='Searchbar' type='text' style={{ ...style }} {...props} />;
+	return <Input placeholder='Searchbar' type='text' style={{ ...style }} {...props} />;
 }
 
 export default memo(SearchBar);

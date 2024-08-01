@@ -1,6 +1,6 @@
 'use client';
 import { useTheme } from 'styled-components';
-import { Flex, Pagination } from '@jpricardo/component-library';
+import { Flex, Pagination, PaginationProps } from '@jpricardo/component-library';
 import { Col, Grid, Row } from 'antd';
 import { memo, useCallback, useMemo, useTransition } from 'react';
 
@@ -54,6 +54,11 @@ function Home() {
 	const doUpdate = useCallback(
 		(value: Partial<DispatchData>) => startTransition(() => dispatch({ type: 'update', value })),
 		[dispatch],
+	);
+
+	const onPaginationClick = useCallback<PaginationProps['onClick']>(
+		(page) => doUpdate({ currentPage: page }),
+		[doUpdate],
 	);
 
 	// Data
@@ -111,7 +116,7 @@ function Home() {
 						<Pagination
 							currentPage={state.currentPage}
 							pageAmmount={pageAmmount}
-							onClick={(page) => doUpdate({ currentPage: page })}
+							onClick={onPaginationClick}
 							onNextPage={() => doUpdate({ currentPage: state.currentPage + 1 })}
 							onPreviousPage={() => doUpdate({ currentPage: state.currentPage - 1 })}
 						/>
@@ -128,7 +133,7 @@ function Home() {
 						<Pagination
 							currentPage={state.currentPage}
 							pageAmmount={pageAmmount}
-							onClick={(page) => doUpdate({ currentPage: page })}
+							onClick={onPaginationClick}
 							onNextPage={() => doUpdate({ currentPage: state.currentPage + 1 })}
 							onPreviousPage={() => doUpdate({ currentPage: state.currentPage - 1 })}
 						/>

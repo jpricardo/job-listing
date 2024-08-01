@@ -14,7 +14,7 @@ const StyledContainer = styled(LibContainer)<{ $hover?: boolean }>`
 	}
 `;
 
-type ContainerProps = LibContainerProps & {
+type ContainerProps = Omit<LibContainerProps, 'ref'> & {
 	title?: React.ReactNode;
 	addon?: React.ReactNode;
 	hover?: boolean;

@@ -140,17 +140,17 @@ function Home() {
 					</Flex>
 				</Col>
 
-				{state.activeId !== undefined && (
-					<>
-						{isLargeScreen ? (
-							<Col xs={0} xl={8} xxl={12}>
-								<JobDetailsCard jobId={state.activeId} />
-							</Col>
-						) : (
-							<JobDetailsModal jobId={state.activeId} onClose={() => doUpdate({ activeId: undefined })} open />
-						)}
-					</>
+				{!isLargeScreen && (
+					<JobDetailsModal
+						jobId={state.activeId}
+						onClose={() => doUpdate({ activeId: undefined })}
+						open={typeof state.activeId === 'number'}
+					/>
 				)}
+
+				<Col xs={0} xl={8} xxl={12}>
+					{state.activeId !== undefined && <JobDetailsCard jobId={state.activeId} />}
+				</Col>
 			</Row>
 		</main>
 	);

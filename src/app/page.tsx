@@ -88,7 +88,14 @@ function Home() {
 	}, [state.itemsPerPage, sortedData?.length]);
 
 	return (
-		<main style={{ padding: isMobile ? '1rem' : '1rem 2rem', background: colors.surface, color: colors.onSurface }}>
+		<main
+			style={{
+				padding: isMobile ? '1rem' : '1rem 2rem',
+				background: colors.surface,
+				color: colors.onSurface,
+				minHeight: '100vh',
+			}}
+		>
 			<Row gutter={[16, 16]}>
 				<Col span={24}>
 					<Header />

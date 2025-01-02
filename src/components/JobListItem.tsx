@@ -2,8 +2,9 @@ import { Flex } from 'antd';
 import React, { memo } from 'react';
 import styled from 'styled-components';
 
-import { AreaType, getDateDifferenceInDays, Job, JobType, SeniorityLevelType } from '@/lib';
+import { getDateDifferenceInDays } from '@/lib';
 import NumberFormatter from '@/lib/NumberFormatter';
+import { AreaType, Job, JobType, SeniorityLevelType } from '@/services/job/entities/job.entity';
 
 import Badge from './containers/Badge';
 import Container from './containers/Container';
@@ -109,13 +110,13 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 							}}
 						/>
 
-						{data.tags.map((tag) => (
+						{/* {data.tags.map((tag) => (
 							<Badge
 								key={tag}
 								content={tag}
 								style={{ background: '#f3f3f3', borderColor: '#f3f3f3', color: 'black' }}
 							/>
-						))}
+						))} */}
 					</Flex>
 				</Flex>
 

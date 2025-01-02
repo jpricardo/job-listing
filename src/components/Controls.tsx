@@ -1,7 +1,8 @@
 import { Flex } from 'antd';
 import { memo } from 'react';
 
-import { AreaType, JobType, OrderByType } from '@/lib';
+import { OrderByType } from '@/lib';
+import { AreaType, JobType } from '@/services/job/entities/job.entity';
 
 import Divider from './Divider';
 import Container from './containers/Container';

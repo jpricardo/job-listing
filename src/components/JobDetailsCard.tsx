@@ -1,21 +1,19 @@
-import { useQuery } from '@tanstack/react-query';
 import { Flex } from 'antd';
 import { memo } from 'react';
 
-import JobService from '@/services/JobService';
+import { useJobQuery } from '@/services/job/job.queries';
 
 import Container from './containers/Container';
 import Button from './inputs/Button';
 import Body from './typography/Body';
 import Title from './typography/Title';
 
-type JobDetailsProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+type JobDetailsCardProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
 	jobId?: number;
 };
 
-function JobDetails({ jobId, ...props }: JobDetailsProps) {
-	const jobService = new JobService();
-	const { data, isPending } = useQuery({ queryKey: ['job', jobId], queryFn: () => jobService.getById(jobId) });
+function JobDetailsCard({ jobId, ...props }: JobDetailsCardProps) {
+	const { data, isPending } = useJobQuery(jobId);
 
 	// TODO - Loading state
 	return isPending ? (
@@ -36,4 +34,4 @@ function JobDetails({ jobId, ...props }: JobDetailsProps) {
 	);
 }
 
-export default memo(JobDetails);
+export default memo(JobDetailsCard);

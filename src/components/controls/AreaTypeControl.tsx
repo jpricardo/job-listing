@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { AreaType } from '@/lib';
+import { AreaType } from '@/services/job/entities/job.entity';
 
 import ControlCard from '../containers/ControlCard';
 import CheckboxGroup from '../inputs/CheckboxGroup';

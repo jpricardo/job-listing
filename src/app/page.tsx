@@ -1,18 +1,19 @@
 'use client';
-import { useQuery } from '@tanstack/react-query';
 import { Col, Flex, Row } from 'antd';
-import { memo, useCallback, useEffect, useMemo, useTransition } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 
 import Controls from '@/components/Controls';
 import Header from '@/components/Header';
 import SearchBar from '@/components/inputs/SearchBar';
-import JobDetails from '@/components/JobDetails';
+import JobDetailsCard from '@/components/JobDetailsCard';
+import JobDetailsModal from '@/components/JobDetailsModal';
 import JobList from '@/components/JobList';
 import Pagination from '@/components/Pagination';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import useObjectReducer from '@/hooks/useObjectReducer';
-import { AreaType, JobType, OrderByType } from '@/lib';
-import JobService from '@/services/JobService';
+import { OrderByType } from '@/lib';
+import { AreaType, JobType } from '@/services/job/entities/job.entity';
+import { useJobsQuery } from '@/services/job/job.queries';
 
 type DispatchData = {
 	// Controls
@@ -30,6 +31,7 @@ type DispatchData = {
 
 function Home() {
 	const isMobile = useIsMobile();
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	// Reducer
 	const [_, startTransition] = useTransition();
@@ -49,8 +51,7 @@ function Home() {
 	);
 
 	// Data
-	const jobService = new JobService();
-	const { data, isPending } = useQuery({ queryKey: ['job'], queryFn: () => jobService.getAll() });
+	const { data, isPending } = useJobsQuery();
 
 	const filteredData = useMemo(() => {
 		return data
@@ -117,7 +118,10 @@ function Home() {
 							itemsPerPage={state.itemsPerPage}
 							items={sortedData}
 							activeId={state.activeId}
-							setActiveId={(id) => doUpdate({ activeId: id })}
+							onClick={(id) => {
+								doUpdate({ activeId: id });
+								setIsModalOpen(true);
+							}}
 							loading={isPending}
 						/>
 
@@ -131,9 +135,17 @@ function Home() {
 					</Flex>
 				</Col>
 
-				<Col xs={24} xl={8} xxl={12}>
-					{state.activeId !== undefined ? <JobDetails jobId={state.activeId} /> : null}
-				</Col>
+				{state.activeId !== undefined && (
+					<>
+						{isMobile ? (
+							<JobDetailsModal jobId={state.activeId} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+						) : (
+							<Col xs={0} xl={8} xxl={12}>
+								<JobDetailsCard jobId={state.activeId} />
+							</Col>
+						)}
+					</>
+				)}
 			</Row>
 		</main>
 	);

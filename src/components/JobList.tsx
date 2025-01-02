@@ -1,8 +1,7 @@
 import { Flex } from 'antd';
-import { Dispatch, memo, SetStateAction, useMemo, useState } from 'react';
+import { memo, useMemo } from 'react';
 
-import { Job } from '@/lib';
-
+import { Job } from '@/services/job/entities/job.entity';
 import JobListItem from './JobListItem';
 
 type JobListProps = {
@@ -12,7 +11,7 @@ type JobListProps = {
 	items?: Job[];
 
 	activeId: number | undefined;
-	setActiveId: (id?: number) => void;
+	onClick: (id?: number) => void;
 
 	loading?: boolean;
 };
@@ -20,7 +19,7 @@ type JobListProps = {
 /**
  * Component representing the Job list
  */
-function JobList({ currentPage, itemsPerPage, items, activeId, setActiveId, loading }: JobListProps) {
+function JobList({ currentPage, itemsPerPage, items, activeId, onClick: setActiveId, loading }: JobListProps) {
 	const itemsInPage = useMemo(() => {
 		return items?.filter((_, index) => {
 			const startIndex = currentPage * itemsPerPage;

@@ -1,7 +1,5 @@
-import { Flex } from 'antd';
+import { Flex, Typography } from '@jpricardo/component-library';
 import styled from 'styled-components';
-
-import Title from '../typography/Title';
 
 const StyledControlCard = styled.div`
 	padding: 0.25rem;
@@ -15,7 +13,7 @@ function ControlCard({ title, children, ...props }: ControlCardProps) {
 	return (
 		<StyledControlCard {...props}>
 			<Flex gap='0.5rem' vertical>
-				<Title>{title}</Title>
+				<Typography.Title>{title}</Typography.Title>
 
 				<div>{children}</div>
 			</Flex>

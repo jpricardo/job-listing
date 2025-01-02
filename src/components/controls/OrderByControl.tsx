@@ -1,13 +1,13 @@
+import { Select } from '@jpricardo/component-library';
 import { memo } from 'react';
 
 import { OrderByType } from '@/lib';
 
 import ControlCard from '../containers/ControlCard';
-import Select from '../inputs/Select';
 
 type OrderByControlProps = {
 	value: OrderByType;
-	onChange: React.HtmlHTMLAttributes<HTMLSelectElement>['onChange'];
+	onChange: (value: OrderByType) => void;
 };
 function OrderByControl({ value, onChange }: OrderByControlProps) {
 	return (

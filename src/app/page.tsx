@@ -1,6 +1,8 @@
 'use client';
-import { Col, Flex, Row } from 'antd';
-import { memo, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
+import { Flex, Pagination, PaginationProps } from '@jpricardo/component-library';
+import { Col, Grid, Row } from 'antd';
+import { memo, useCallback, useMemo, useState, useTransition } from 'react';
+import { useTheme } from 'styled-components';
 
 import Controls from '@/components/Controls';
 import Header from '@/components/Header';
@@ -8,11 +10,10 @@ import SearchBar from '@/components/inputs/SearchBar';
 import JobDetailsCard from '@/components/JobDetailsCard';
 import JobDetailsModal from '@/components/JobDetailsModal';
 import JobList from '@/components/JobList';
-import Pagination from '@/components/Pagination';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import useObjectReducer from '@/hooks/useObjectReducer';
 import { OrderByType } from '@/lib';
-import { AreaType, JobType } from '@/services/job/entities/job.entity';
+import { AreaType, JobType, SeniorityLevelType } from '@/services/job/entities/job.entity';
 import { useJobsQuery } from '@/services/job/job.queries';
 
 type DispatchData = {
@@ -22,6 +23,7 @@ type DispatchData = {
 	orderBy: OrderByType;
 	jobTypes: JobType[];
 	areaTypes: AreaType[];
+	seniorityLevelTypes: SeniorityLevelType[];
 
 	// Pagination
 	// TODO - The user must control this setting
@@ -29,8 +31,13 @@ type DispatchData = {
 	currentPage: number;
 };
 
+const { useBreakpoint } = Grid;
+
 function Home() {
+	const { colors } = useTheme();
 	const isMobile = useIsMobile();
+	const breakpoint = useBreakpoint();
+	const isLargeScreen = breakpoint.xl;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	// Reducer
@@ -40,6 +47,7 @@ function Home() {
 		orderBy: 'Most relevant',
 		jobTypes: [],
 		areaTypes: [],
+		seniorityLevelTypes: [],
 
 		itemsPerPage: 10,
 		currentPage: 0,
@@ -50,6 +58,11 @@ function Home() {
 		[dispatch],
 	);
 
+	const onPaginationClick = useCallback<PaginationProps['onClick']>(
+		(page) => doUpdate({ currentPage: page }),
+		[doUpdate],
+	);
+
 	// Data
 	const { data, isPending } = useJobsQuery();
 
@@ -57,7 +70,10 @@ function Home() {
 		return data
 			?.filter((item) => item.title.toLowerCase().includes(state.searchTerm.toLowerCase()))
 			.filter((item) => state.jobTypes.length === 0 || state.jobTypes.includes(item.jobType))
-			.filter((item) => state.areaTypes.length === 0 || state.areaTypes.includes(item.areaType));
+			.filter((item) => state.areaTypes.length === 0 || state.areaTypes.includes(item.areaType))
+			.filter(
+				(item) => state.seniorityLevelTypes.length === 0 || state.seniorityLevelTypes.includes(item.seniorityLevel),
+			);
 	}, [data, state]);
 
 	const sortedData = useMemo(() => {
@@ -73,13 +89,15 @@ function Home() {
 		return Math.ceil((sortedData?.length ?? 0) / state.itemsPerPage);
 	}, [state.itemsPerPage, sortedData?.length]);
 
-	useEffect(() => {
-		if (!sortedData?.length) return;
-		doUpdate({ currentPage: 0 });
-	}, [sortedData?.length, doUpdate]);
-
 	return (
-		<main style={{ padding: isMobile ? '0.5rem' : `1rem 2rem'}` }}>
+		<main
+			style={{
+				padding: isMobile ? '1rem' : '1rem 2rem',
+				background: colors.surface,
+				color: colors.onSurface,
+				minHeight: '100vh',
+			}}
+		>
 			<Row gutter={[16, 16]}>
 				<Col span={24}>
 					<Header />
@@ -89,15 +107,14 @@ function Home() {
 					<Controls
 						onReset={() => dispatch({ type: 'reset' })}
 						orderBy={state.orderBy}
-						onOrderByChange={(e) => {
-							//@ts-ignore
-							// TODO - Fix this type
-							doUpdate({ orderBy: e.target.value });
-						}}
+						onOrderByChange={(value) => doUpdate({ orderBy: value })}
 						jobTypes={state.jobTypes}
 						onJobTypesChange={(value) => doUpdate({ jobTypes: value })}
 						areaTypes={state.areaTypes}
 						onAreaTypesChange={(value) => doUpdate({ areaTypes: value })}
+						seniorityLevelTypes={state.seniorityLevelTypes}
+						onSeniorityLevelTypesChange={(value) => doUpdate({ seniorityLevelTypes: value })}
+						style={isMobile ? {} : { position: 'sticky', top: '1rem' }}
 					/>
 				</Col>
 
@@ -108,7 +125,7 @@ function Home() {
 						<Pagination
 							currentPage={state.currentPage}
 							pageAmmount={pageAmmount}
-							onClick={(page) => doUpdate({ currentPage: page })}
+							onClick={onPaginationClick}
 							onNextPage={() => doUpdate({ currentPage: state.currentPage + 1 })}
 							onPreviousPage={() => doUpdate({ currentPage: state.currentPage - 1 })}
 						/>
@@ -128,7 +145,7 @@ function Home() {
 						<Pagination
 							currentPage={state.currentPage}
 							pageAmmount={pageAmmount}
-							onClick={(page) => doUpdate({ currentPage: page })}
+							onClick={onPaginationClick}
 							onNextPage={() => doUpdate({ currentPage: state.currentPage + 1 })}
 							onPreviousPage={() => doUpdate({ currentPage: state.currentPage - 1 })}
 						/>

@@ -1,40 +1,36 @@
-import { Flex } from 'antd';
+import {
+	Flex,
+	Container as LibContainer,
+	ContainerProps as LibContainerProps,
+	Typography,
+} from '@jpricardo/component-library';
 import { memo } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
-const StyledContainer = styled.div<{ $hover?: boolean }>`
-	backgroundcolor: #fefefe;
-	border: 1px solid #c3c3c3;
-	padding: 1rem;
-	border-radius: 0.25rem;
-
-	cursor: ${({ $hover }) => ($hover ? 'pointer' : 'initial')};
-
+const StyledContainer = styled(LibContainer)<{ $hover?: boolean }>`
 	&:hover {
-		box-shadow: ${({ $hover }) => ($hover ? 'rgba(0, 0, 0, 0.25) 0px 0px 8px 0px' : '')};
+		cursor: ${({ $hover }) => ($hover ? 'pointer' : 'initial')};
+		box-shadow: ${({ $hover, theme }) => ($hover ? theme.shadows.xs : '')};
 	}
 `;
 
-type ContainerProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
+type ContainerProps = Omit<LibContainerProps, 'ref'> & {
 	title?: React.ReactNode;
 	addon?: React.ReactNode;
 	hover?: boolean;
 };
 function Container({ title, addon, children, hover, ...props }: ContainerProps) {
+	const { colors } = useTheme();
+
 	return (
 		<StyledContainer $hover={hover} {...props}>
 			{!!title && (
 				<Flex
 					justify='space-between'
 					align='center'
-					style={{
-						borderBottom: '1px solid #c3c3c3',
-						padding: '1rem',
-						margin: '-1rem -1rem 1rem',
-						backgroundColor: '#f0f0f0',
-					}}
+					style={{ padding: '1rem', margin: '-1rem -1rem 1rem', backgroundColor: colors.containerHigh }}
 				>
-					<span style={{ fontSize: '1rem', fontWeight: 500 }}>{title}</span>
+					<Typography.Title>{title}</Typography.Title>
 
 					{addon}
 				</Flex>

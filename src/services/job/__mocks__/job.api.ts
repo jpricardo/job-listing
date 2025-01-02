@@ -1,6 +1,10 @@
-import { AreaType, getRandomNumber, getRandomSample, Job, JobType, SeniorityLevelType } from '@/lib';
+import { getRandomNumber, getRandomSample } from '@/lib';
 
-import BaseApi from './BaseApi';
+import HttpAdapter from '@/lib/HttpAdapter';
+
+import { CreateJobDto } from '../dto/create-job.dto';
+import { UpdateJobDto } from '../dto/update-job.dto';
+import { AreaType, Job, JobType, SeniorityLevelType } from '../entities/job.entity';
 
 const getRandomPastDate = () => {
 	const date = new Date();
@@ -88,20 +92,30 @@ const getRandomJobs = (ammount: number) => {
 const allJobs = getRandomJobs(69);
 
 export interface IJobApi {
+	create: (payload: CreateJobDto) => Promise<void>;
+
 	getJobs: () => Promise<Job[]>;
-	getJobById: (id?: number) => Promise<Job | undefined>;
+	getJobById: (id: Job['id']) => Promise<Job | undefined>;
+
+	update: (id: Job['id'], payload: UpdateJobDto) => Promise<void>;
 }
 
-export default class JobApi extends BaseApi implements IJobApi {
-	constructor(delay?: number) {
-		super(delay);
+export default class JobApi implements IJobApi {
+	constructor(private readonly adapter = new HttpAdapter()) {}
+
+	public async create() {
+		return this.adapter.mockRequest<void>();
 	}
 
 	public async getJobs() {
-		return await this.mockRequest(allJobs);
+		return this.adapter.mockRequest<Job[]>(allJobs);
 	}
 
-	public async getJobById(id?: number) {
-		return await this.mockRequest(allJobs.find((item) => item.id === id));
+	public async getJobById(id: number) {
+		return this.adapter.mockRequest(allJobs.find((job) => job.id === id));
+	}
+
+	public async update() {
+		return this.adapter.mockRequest<void>();
 	}
 }

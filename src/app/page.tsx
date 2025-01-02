@@ -1,8 +1,8 @@
 'use client';
-import { useTheme } from 'styled-components';
 import { Flex, Pagination, PaginationProps } from '@jpricardo/component-library';
 import { Col, Grid, Row } from 'antd';
-import { memo, useCallback, useMemo, useTransition } from 'react';
+import { memo, useCallback, useMemo, useState, useTransition } from 'react';
+import { useTheme } from 'styled-components';
 
 import Controls from '@/components/Controls';
 import Header from '@/components/Header';
@@ -12,10 +12,9 @@ import JobDetailsModal from '@/components/JobDetailsModal';
 import JobList from '@/components/JobList';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import useObjectReducer from '@/hooks/useObjectReducer';
-import { AreaType, JobType, OrderByType, SeniorityLevelType } from '@/lib';
-import useAllJobsQuery from '@/queries/useAllJobsQuery';
-
-const { useBreakpoint } = Grid;
+import { OrderByType } from '@/lib';
+import { AreaType, JobType, SeniorityLevelType } from '@/services/job/entities/job.entity';
+import { useJobsQuery } from '@/services/job/job.queries';
 
 type DispatchData = {
 	// Controls
@@ -32,11 +31,14 @@ type DispatchData = {
 	currentPage: number;
 };
 
+const { useBreakpoint } = Grid;
+
 function Home() {
 	const { colors } = useTheme();
 	const isMobile = useIsMobile();
 	const breakpoint = useBreakpoint();
 	const isLargeScreen = breakpoint.xl;
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	// Reducer
 	const [_, startTransition] = useTransition();
@@ -62,7 +64,7 @@ function Home() {
 	);
 
 	// Data
-	const { data, isPending } = useAllJobsQuery();
+	const { data, isPending } = useJobsQuery();
 
 	const filteredData = useMemo(() => {
 		return data
@@ -133,7 +135,10 @@ function Home() {
 							itemsPerPage={state.itemsPerPage}
 							items={sortedData}
 							activeId={state.activeId}
-							setActiveId={(id) => doUpdate({ activeId: id })}
+							onClick={(id) => {
+								doUpdate({ activeId: id });
+								setIsModalOpen(true);
+							}}
 							loading={isPending}
 						/>
 
@@ -147,17 +152,17 @@ function Home() {
 					</Flex>
 				</Col>
 
-				{!isLargeScreen && (
-					<JobDetailsModal
-						jobId={state.activeId}
-						onClose={() => doUpdate({ activeId: undefined })}
-						open={typeof state.activeId === 'number'}
-					/>
+				{state.activeId !== undefined && (
+					<>
+						{isMobile ? (
+							<JobDetailsModal jobId={state.activeId} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+						) : (
+							<Col xs={0} xl={8} xxl={12}>
+								<JobDetailsCard jobId={state.activeId} />
+							</Col>
+						)}
+					</>
 				)}
-
-				<Col xs={0} xl={8} xxl={12}>
-					{state.activeId !== undefined && <JobDetailsCard jobId={state.activeId} />}
-				</Col>
 			</Row>
 		</main>
 	);

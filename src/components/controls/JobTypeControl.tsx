@@ -1,7 +1,7 @@
 import { CheckboxGroup } from '@jpricardo/component-library';
 import { memo } from 'react';
 
-import { JobType } from '@/lib';
+import { JobType } from '@/services/job/entities/job.entity';
 
 import ControlCard from '../containers/ControlCard';
 

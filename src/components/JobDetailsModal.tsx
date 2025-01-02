@@ -2,7 +2,7 @@ import { Button, Flex, Modal, Typography } from '@jpricardo/component-library';
 import { memo } from 'react';
 
 import { useIsMobile } from '@/hooks/useIsMobile';
-import useJobByIdQuery from '@/queries/useJobByIdQuery';
+import { useJobQuery } from '@/services/job/job.queries';
 
 type JobDetailsModalProps = {
 	jobId?: number;
@@ -13,7 +13,7 @@ type JobDetailsModalProps = {
 
 function JobDetailsModal({ jobId, open, onClose }: JobDetailsModalProps) {
 	const isMobile = useIsMobile();
-	const { data, isPending } = useJobByIdQuery(jobId);
+	const { data, isPending } = useJobQuery(jobId);
 
 	const baseStyle: React.CSSProperties = { width: '800px', maxWidth: '80%' };
 	const desktopStyle: React.CSSProperties = { ...baseStyle };

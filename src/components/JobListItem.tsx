@@ -2,8 +2,9 @@ import { Badge, Flex, Typography } from '@jpricardo/component-library';
 import React, { memo } from 'react';
 import styled from 'styled-components';
 
-import { AreaType, getDateDifferenceInDays, Job, JobType, SeniorityLevelType } from '@/lib';
+import { getDateDifferenceInDays } from '@/lib';
 import NumberFormatter from '@/lib/NumberFormatter';
+import { AreaType, Job, JobType, SeniorityLevelType } from '@/services/job/entities/job.entity';
 
 import Container from './containers/Container';
 
@@ -105,9 +106,9 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 							{data.seniorityLevel}
 						</Badge>
 
-						{data.tags.map((tag) => (
+						{/* {data.tags.map((tag) => (
 							<Badge key={tag}>{tag}</Badge>
-						))}
+						))} */}
 					</Flex>
 				</Flex>
 

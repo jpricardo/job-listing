@@ -1,5 +1,5 @@
-import { Flex } from 'antd';
-import { Dispatch, memo, SetStateAction, useMemo, useState } from 'react';
+import { Flex, Typography } from '@jpricardo/component-library';
+import { memo, useMemo } from 'react';
 
 import { Job } from '@/lib';
 
@@ -31,11 +31,11 @@ function JobList({ currentPage, itemsPerPage, items, activeId, setActiveId, load
 	// TODO - Loading state
 	return (
 		<Flex gap='0.5rem' vertical>
-			<span>
+			<Typography.Footnote>
 				{items?.length} results found ({itemsInPage?.length} in this page)
-			</span>
+			</Typography.Footnote>
 
-			{!items && <span>No data</span>}
+			{!items && <Typography.Footnote>No data</Typography.Footnote>}
 
 			<Flex gap='0.5rem' vertical>
 				{itemsInPage?.map((item, index) => {

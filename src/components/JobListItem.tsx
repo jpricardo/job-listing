@@ -1,24 +1,18 @@
-import { Flex } from 'antd';
+import { Badge, Flex, Typography } from '@jpricardo/component-library';
 import React, { memo } from 'react';
 import styled from 'styled-components';
 
 import { AreaType, getDateDifferenceInDays, Job, JobType, SeniorityLevelType } from '@/lib';
 import NumberFormatter from '@/lib/NumberFormatter';
 
-import Badge from './containers/Badge';
 import Container from './containers/Container';
-import Body from './typography/Body';
-import Footnote from './typography/Footnote';
-import Title from './typography/Title';
 
-const StyledJobListItem = styled(Container)<{ $active?: boolean }>(({ $active }) => {
-	const baseProps: React.CSSProperties = {
-		userSelect: 'none',
-		transition: 'all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1)',
-	};
+const StyledJobListItem = styled(Container)<{ $active?: boolean }>`
+	user-select: none;
+	transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 
-	return $active ? { borderColor: '#a3a3a3', backgroundColor: '#f3f3f3', ...baseProps } : { ...baseProps };
-});
+	box-shadow: ${({ $active, theme }) => ($active ? theme.shadows.xs : '')};
+`;
 
 type JobListItemProps = React.HTMLAttributes<HTMLDivElement> & {
 	data: Job;
@@ -58,68 +52,66 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 	const daysAgo = getDateDifferenceInDays(data.createdAt, new Date());
 
 	return (
-		<StyledJobListItem hover $active={active} {...props}>
+		<StyledJobListItem hover variant={active ? 'default' : 'low'} $active={active} {...props}>
 			<Flex gap='1rem' vertical>
 				<Flex gap='0.5rem' vertical>
 					<Flex gap='0.25rem' vertical>
 						<Flex gap='1rem' align='center'>
-							<Title>{data.title}</Title>
+							<Typography.Title>{data.title}</Typography.Title>
 
-							<Flex flex={1}>
-								<Badge
-									content={NumberFormatter.format(data.yearlySalary, 'USD')}
-									style={{ backgroundColor: '#155e28', color: 'white', borderColor: '#155e28' }}
-								/>
+							<Flex style={{ flex: 1 }}>
+								<Badge style={{ backgroundColor: '#155e28', color: 'white', borderColor: '#155e28' }}>
+									<>{NumberFormatter.format(data.yearlySalary, 'USD')} /yr</>
+								</Badge>
 							</Flex>
 
-							<Footnote>
+							<Typography.Footnote>
 								{daysAgo === 0 && 'Today'}
 								{daysAgo === 1 && 'Yesterday'}
 								{daysAgo > 1 && <>{daysAgo} days ago</>}
-							</Footnote>
+							</Typography.Footnote>
 						</Flex>
-						<Footnote>{data.company}</Footnote>
+						<Typography.Footnote>{data.company}</Typography.Footnote>
 					</Flex>
 
-					<Flex gap='0.25rem' align='center' wrap>
+					<Flex gap='0.25rem' align='center' style={{ flexWrap: 'wrap' }}>
 						<Badge
-							content={data.areaType}
 							style={{
 								background: areaTypeColors[data.areaType].bg,
 								borderColor: areaTypeColors[data.areaType].bg,
 								color: areaTypeColors[data.areaType].color,
 							}}
-						/>
+						>
+							{data.areaType}
+						</Badge>
 
 						<Badge
-							content={data.jobType}
 							style={{
 								background: jobTypeColors[data.jobType].bg,
 								borderColor: jobTypeColors[data.jobType].bg,
 								color: jobTypeColors[data.jobType].color,
 							}}
-						/>
+						>
+							{data.jobType}
+						</Badge>
 
 						<Badge
-							content={data.seniorityLevel}
 							style={{
 								background: seniorityLevelColors[data.seniorityLevel].bg,
 								borderColor: seniorityLevelColors[data.seniorityLevel].bg,
 								color: seniorityLevelColors[data.seniorityLevel].color,
 							}}
-						/>
+						>
+							{data.seniorityLevel}
+						</Badge>
 
 						{data.tags.map((tag) => (
-							<Badge
-								key={tag}
-								content={tag}
-								style={{ background: '#f3f3f3', borderColor: '#f3f3f3', color: 'black' }}
-							/>
+							<Badge key={tag}>{tag}</Badge>
 						))}
 					</Flex>
 				</Flex>
 
-				<Body>{data.shortDescription}</Body>
+				<Typography.Body>{data.shortDescription}</Typography.Body>
 			</Flex>
 		</StyledJobListItem>
 	);

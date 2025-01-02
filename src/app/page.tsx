@@ -1,18 +1,21 @@
 'use client';
-import { useQuery } from '@tanstack/react-query';
-import { Col, Flex, Row } from 'antd';
-import { memo, useCallback, useEffect, useMemo, useTransition } from 'react';
+import { useTheme } from 'styled-components';
+import { Flex, Pagination, PaginationProps } from '@jpricardo/component-library';
+import { Col, Grid, Row } from 'antd';
+import { memo, useCallback, useMemo, useTransition } from 'react';
 
 import Controls from '@/components/Controls';
 import Header from '@/components/Header';
 import SearchBar from '@/components/inputs/SearchBar';
-import JobDetails from '@/components/JobDetails';
+import JobDetailsCard from '@/components/JobDetailsCard';
+import JobDetailsModal from '@/components/JobDetailsModal';
 import JobList from '@/components/JobList';
-import Pagination from '@/components/Pagination';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import useObjectReducer from '@/hooks/useObjectReducer';
-import { AreaType, JobType, OrderByType } from '@/lib';
-import JobService from '@/services/JobService';
+import { AreaType, JobType, OrderByType, SeniorityLevelType } from '@/lib';
+import useAllJobsQuery from '@/queries/useAllJobsQuery';
+
+const { useBreakpoint } = Grid;
 
 type DispatchData = {
 	// Controls
@@ -21,6 +24,7 @@ type DispatchData = {
 	orderBy: OrderByType;
 	jobTypes: JobType[];
 	areaTypes: AreaType[];
+	seniorityLevelTypes: SeniorityLevelType[];
 
 	// Pagination
 	// TODO - The user must control this setting
@@ -29,7 +33,10 @@ type DispatchData = {
 };
 
 function Home() {
+	const { colors } = useTheme();
 	const isMobile = useIsMobile();
+	const breakpoint = useBreakpoint();
+	const isLargeScreen = breakpoint.xl;
 
 	// Reducer
 	const [_, startTransition] = useTransition();
@@ -38,6 +45,7 @@ function Home() {
 		orderBy: 'Most relevant',
 		jobTypes: [],
 		areaTypes: [],
+		seniorityLevelTypes: [],
 
 		itemsPerPage: 10,
 		currentPage: 0,
@@ -48,15 +56,22 @@ function Home() {
 		[dispatch],
 	);
 
+	const onPaginationClick = useCallback<PaginationProps['onClick']>(
+		(page) => doUpdate({ currentPage: page }),
+		[doUpdate],
+	);
+
 	// Data
-	const jobService = new JobService();
-	const { data, isPending } = useQuery({ queryKey: ['job'], queryFn: () => jobService.getAll() });
+	const { data, isPending } = useAllJobsQuery();
 
 	const filteredData = useMemo(() => {
 		return data
 			?.filter((item) => item.title.toLowerCase().includes(state.searchTerm.toLowerCase()))
 			.filter((item) => state.jobTypes.length === 0 || state.jobTypes.includes(item.jobType))
-			.filter((item) => state.areaTypes.length === 0 || state.areaTypes.includes(item.areaType));
+			.filter((item) => state.areaTypes.length === 0 || state.areaTypes.includes(item.areaType))
+			.filter(
+				(item) => state.seniorityLevelTypes.length === 0 || state.seniorityLevelTypes.includes(item.seniorityLevel),
+			);
 	}, [data, state]);
 
 	const sortedData = useMemo(() => {
@@ -72,13 +87,15 @@ function Home() {
 		return Math.ceil((sortedData?.length ?? 0) / state.itemsPerPage);
 	}, [state.itemsPerPage, sortedData?.length]);
 
-	useEffect(() => {
-		if (!sortedData?.length) return;
-		doUpdate({ currentPage: 0 });
-	}, [sortedData?.length, doUpdate]);
-
 	return (
-		<main style={{ padding: isMobile ? '0.5rem' : `1rem 2rem'}` }}>
+		<main
+			style={{
+				padding: isMobile ? '1rem' : '1rem 2rem',
+				background: colors.surface,
+				color: colors.onSurface,
+				minHeight: '100vh',
+			}}
+		>
 			<Row gutter={[16, 16]}>
 				<Col span={24}>
 					<Header />
@@ -88,15 +105,14 @@ function Home() {
 					<Controls
 						onReset={() => dispatch({ type: 'reset' })}
 						orderBy={state.orderBy}
-						onOrderByChange={(e) => {
-							//@ts-ignore
-							// TODO - Fix this type
-							doUpdate({ orderBy: e.target.value });
-						}}
+						onOrderByChange={(value) => doUpdate({ orderBy: value })}
 						jobTypes={state.jobTypes}
 						onJobTypesChange={(value) => doUpdate({ jobTypes: value })}
 						areaTypes={state.areaTypes}
 						onAreaTypesChange={(value) => doUpdate({ areaTypes: value })}
+						seniorityLevelTypes={state.seniorityLevelTypes}
+						onSeniorityLevelTypesChange={(value) => doUpdate({ seniorityLevelTypes: value })}
+						style={isMobile ? {} : { position: 'sticky', top: '1rem' }}
 					/>
 				</Col>
 
@@ -107,7 +123,7 @@ function Home() {
 						<Pagination
 							currentPage={state.currentPage}
 							pageAmmount={pageAmmount}
-							onClick={(page) => doUpdate({ currentPage: page })}
+							onClick={onPaginationClick}
 							onNextPage={() => doUpdate({ currentPage: state.currentPage + 1 })}
 							onPreviousPage={() => doUpdate({ currentPage: state.currentPage - 1 })}
 						/>
@@ -124,15 +140,23 @@ function Home() {
 						<Pagination
 							currentPage={state.currentPage}
 							pageAmmount={pageAmmount}
-							onClick={(page) => doUpdate({ currentPage: page })}
+							onClick={onPaginationClick}
 							onNextPage={() => doUpdate({ currentPage: state.currentPage + 1 })}
 							onPreviousPage={() => doUpdate({ currentPage: state.currentPage - 1 })}
 						/>
 					</Flex>
 				</Col>
 
-				<Col xs={24} xl={8} xxl={12}>
-					{state.activeId !== undefined ? <JobDetails jobId={state.activeId} /> : null}
+				{!isLargeScreen && (
+					<JobDetailsModal
+						jobId={state.activeId}
+						onClose={() => doUpdate({ activeId: undefined })}
+						open={typeof state.activeId === 'number'}
+					/>
+				)}
+
+				<Col xs={0} xl={8} xxl={12}>
+					{state.activeId !== undefined && <JobDetailsCard jobId={state.activeId} />}
 				</Col>
 			</Row>
 		</main>

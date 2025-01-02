@@ -1,9 +1,9 @@
+import { CheckboxGroup } from '@jpricardo/component-library';
 import { memo } from 'react';
 
 import { AreaType } from '@/lib';
 
 import ControlCard from '../containers/ControlCard';
-import CheckboxGroup from '../inputs/CheckboxGroup';
 
 type AreaTypeControlProps = {
 	value: AreaType[];
@@ -14,13 +14,8 @@ function AreaTypeControl({ value, onChange }: AreaTypeControlProps) {
 	const options: AreaType[] = ['Design', 'DevOps', 'Development', 'Management', 'QA'];
 
 	return (
-		<ControlCard title='Area type'>
-			<CheckboxGroup
-				name='area-type-checkboxgroup'
-				options={options}
-				value={value}
-				onChange={(value) => onChange(value as AreaType[])}
-			/>
+		<ControlCard title='Area'>
+			<CheckboxGroup name='area-type-checkboxgroup' options={options} value={value} onChange={onChange} />
 		</ControlCard>
 	);
 }

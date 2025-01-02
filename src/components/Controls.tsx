@@ -1,7 +1,8 @@
 import { Button, Divider, Flex } from '@jpricardo/component-library';
 import { memo } from 'react';
 
-import { AreaType, JobType, OrderByType, SeniorityLevelType } from '@/lib';
+import { OrderByType } from '@/lib';
+import { AreaType, JobType, SeniorityLevelType } from '@/services/job/entities/job.entity';
 
 import Container from './containers/Container';
 import AreaTypeControl from './controls/AreaTypeControl';

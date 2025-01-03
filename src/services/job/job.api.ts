@@ -17,7 +17,7 @@ export interface IJobApi {
 }
 
 export default class JobApi implements IJobApi {
-	constructor(private readonly adapter = new HttpAdapter(process.env.NEXT_PUBLIC_API_URL || '')) {}
+	constructor(private readonly adapter = new HttpAdapter()) {}
 
 	public async create(payload: CreateJobDto) {
 		return this.adapter.postRequest<CreateJobDto>('/jobs', payload);

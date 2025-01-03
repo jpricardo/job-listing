@@ -1,10 +1,10 @@
-import { getRandomNumber, getRandomSample } from '@/lib';
+import { areaTypeOptions, getRandomNumber, getRandomSample, jobTypeOptions, seniorityLeveloptions } from '@/lib';
 
 import HttpAdapter from '@/lib/HttpAdapter';
 
 import { CreateJobDto } from '../dto/create-job.dto';
 import { UpdateJobDto } from '../dto/update-job.dto';
-import { AreaType, Job, JobType, SeniorityLevelType } from '../entities/job.entity';
+import { AreaType, Job, JobType, SeniorityLevel } from '../entities/job.entity';
 
 const getRandomPastDate = () => {
 	const date = new Date();
@@ -14,9 +14,9 @@ const getRandomPastDate = () => {
 };
 
 const getRandomJob = (index: number): Job => {
-	const jobTypes: JobType[] = ['FullTime', 'Hybrid', 'Remote'];
-	const areaTypes: AreaType[] = ['Design', 'DevOps', 'Development', 'Management', 'QA'];
-	const seniorityLevelTypes: SeniorityLevelType[] = ['Junior', 'Associate', 'Senior', 'Lead'];
+	const jobTypes: JobType[] = jobTypeOptions;
+	const areaTypes: AreaType[] = areaTypeOptions;
+	const seniorityLevelTypes: SeniorityLevel[] = seniorityLeveloptions;
 	const allTags: string[] = [
 		'Agile',
 		'Startup',

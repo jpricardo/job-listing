@@ -2,13 +2,13 @@ import { Button, Divider, Flex } from '@jpricardo/component-library';
 import { memo } from 'react';
 
 import { OrderByType } from '@/lib';
-import { AreaType, JobType, SeniorityLevelType } from '@/services/job/entities/job.entity';
+import { AreaType, JobType, SeniorityLevel } from '@/services/job/entities/job.entity';
 
 import Container from './containers/Container';
 import AreaTypeControl from './controls/AreaTypeControl';
 import JobTypeControl from './controls/JobTypeControl';
 import OrderByControl from './controls/OrderByControl';
-import SeniorityLevelTypeControl from './controls/SeniorityLevelTypeControl';
+import SeniorityLevelControl from './controls/SeniorityLevelControl';
 
 type ControlsProps = {
 	id?: string;
@@ -26,8 +26,8 @@ type ControlsProps = {
 	areaTypes: AreaType[];
 	onAreaTypesChange: (value: AreaType[]) => void;
 
-	seniorityLevelTypes: SeniorityLevelType[];
-	onSeniorityLevelTypesChange: (value: SeniorityLevelType[]) => void;
+	seniorityLevelTypes: SeniorityLevel[];
+	onSeniorityLevelTypesChange: (value: SeniorityLevel[]) => void;
 };
 function Controls({
 	onReset,
@@ -50,7 +50,7 @@ function Controls({
 				<Divider />
 				<AreaTypeControl value={areaTypes} onChange={onAreaTypesChange} />
 				<Divider />
-				<SeniorityLevelTypeControl value={seniorityLevelTypes} onChange={onSeniorityLevelTypesChange} />
+				<SeniorityLevelControl value={seniorityLevelTypes} onChange={onSeniorityLevelTypesChange} />
 			</Flex>
 		</Container>
 	);

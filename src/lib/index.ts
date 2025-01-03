@@ -1,3 +1,5 @@
+import { AreaType, JobType, SeniorityLevel } from '@/services/job/entities/job.entity';
+
 export type OrderByType = 'Most relevant' | 'Most recent' | 'Best pay';
 
 export const getRandomNumber = (min = 0, max = 1) => min + Math.floor(Math.random() * (max - min));
@@ -26,3 +28,20 @@ export const getDateDifferenceInDays = (start: Date, end: Date) => {
 };
 
 export const timer = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+export const areaTypeOptions: AreaType[] = [
+	AreaType.DESIGN,
+	AreaType.DEVOPS,
+	AreaType.DEVELOPMENT,
+	AreaType.MANAGEMENT,
+	AreaType.QA,
+];
+
+export const jobTypeOptions: JobType[] = [JobType.FULLTIME, JobType.HYBRID, JobType.REMOTE];
+
+export const seniorityLeveloptions: SeniorityLevel[] = [
+	SeniorityLevel.JUNIOR,
+	SeniorityLevel.ASSOCIATE,
+	SeniorityLevel.SENIOR,
+	SeniorityLevel.LEAD,
+];

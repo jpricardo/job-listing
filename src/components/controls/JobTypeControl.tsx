@@ -1,6 +1,7 @@
 import { CheckboxGroup } from '@jpricardo/component-library';
 import { memo } from 'react';
 
+import { jobTypeOptions } from '@/lib';
 import { JobType } from '@/services/job/entities/job.entity';
 
 import ControlCard from '../containers/ControlCard';
@@ -11,11 +12,9 @@ type JobTypeControlProps = {
 };
 
 function JobTypeControl({ value, onChange }: JobTypeControlProps) {
-	const options: JobType[] = ['FullTime', 'Hybrid', 'Remote'];
-
 	return (
 		<ControlCard title='Job type'>
-			<CheckboxGroup name='job-type-checkboxgroup' options={options} value={value} onChange={onChange} />
+			<CheckboxGroup name='job-type-checkboxgroup' options={jobTypeOptions} value={value} onChange={onChange} />
 		</ControlCard>
 	);
 }

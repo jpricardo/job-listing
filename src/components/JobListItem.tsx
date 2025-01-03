@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { getDateDifferenceInDays } from '@/lib';
 import NumberFormatter from '@/lib/NumberFormatter';
-import { AreaType, Job, JobType, SeniorityLevelType } from '@/services/job/entities/job.entity';
+import { AreaType, Job, JobType, SeniorityLevel } from '@/services/job/entities/job.entity';
 
 import Container from './containers/Container';
 
@@ -24,26 +24,26 @@ type ColorPalette = { bg: string; color: string };
 
 // TODO - Definitive color palette
 const jobTypeColors: Record<JobType, ColorPalette> = {
-	FullTime: { bg: '#85D8FF', color: 'black' },
-	Hybrid: { bg: '#0070A3', color: 'white' },
-	Remote: { bg: '#002F45', color: 'white' },
+	[JobType.FULLTIME]: { bg: '#85D8FF', color: 'black' },
+	[JobType.HYBRID]: { bg: '#0070A3', color: 'white' },
+	[JobType.REMOTE]: { bg: '#002F45', color: 'white' },
 };
 
 // TODO - Definitive color palette
 const areaTypeColors: Record<AreaType, ColorPalette> = {
-	Design: { bg: '#E9C2AF', color: 'black' },
-	DevOps: { bg: '#B83D00', color: 'white' },
-	Development: { bg: '#6F3A1F', color: 'white' },
-	Management: { bg: '#402112', color: 'white' },
-	QA: { bg: 'black', color: 'white' },
+	[AreaType.DESIGN]: { bg: '#E9C2AF', color: 'black' },
+	[AreaType.DEVOPS]: { bg: '#B83D00', color: 'white' },
+	[AreaType.DEVELOPMENT]: { bg: '#6F3A1F', color: 'white' },
+	[AreaType.MANAGEMENT]: { bg: '#402112', color: 'white' },
+	[AreaType.QA]: { bg: 'black', color: 'white' },
 };
 
 // TODO - Definitive color palette
-const seniorityLevelColors: Record<SeniorityLevelType, ColorPalette> = {
-	Junior: { bg: '#D0CEF2', color: 'black' },
-	Associate: { bg: '#A09EE6', color: 'white' },
-	Senior: { bg: '#1B1961', color: 'white' },
-	Lead: { bg: '#0E0D33', color: 'white' },
+const seniorityLevelColors: Record<SeniorityLevel, ColorPalette> = {
+	[SeniorityLevel.JUNIOR]: { bg: '#D0CEF2', color: 'black' },
+	[SeniorityLevel.ASSOCIATE]: { bg: '#A09EE6', color: 'white' },
+	[SeniorityLevel.SENIOR]: { bg: '#1B1961', color: 'white' },
+	[SeniorityLevel.LEAD]: { bg: '#0E0D33', color: 'white' },
 };
 
 /**

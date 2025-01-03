@@ -13,7 +13,7 @@ import JobList from '@/components/JobList';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import useObjectReducer from '@/hooks/useObjectReducer';
 import { OrderByType } from '@/lib';
-import { AreaType, JobType, SeniorityLevelType } from '@/services/job/entities/job.entity';
+import { AreaType, JobType, SeniorityLevel } from '@/services/job/entities/job.entity';
 import { useJobsQuery } from '@/services/job/job.queries';
 
 type DispatchData = {
@@ -23,7 +23,7 @@ type DispatchData = {
 	orderBy: OrderByType;
 	jobTypes: JobType[];
 	areaTypes: AreaType[];
-	seniorityLevelTypes: SeniorityLevelType[];
+	seniorityLevelTypes: SeniorityLevel[];
 
 	// Pagination
 	// TODO - The user must control this setting

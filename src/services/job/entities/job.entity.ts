@@ -1,8 +1,23 @@
-export type JobType = 'FullTime' | 'Hybrid' | 'Remote';
+export enum JobType {
+	FULLTIME = 'FullTime',
+	HYBRID = 'Hybrid',
+	REMOTE = 'Remote',
+}
 
-export type AreaType = 'Development' | 'Design' | 'DevOps' | 'QA' | 'Management';
+export enum AreaType {
+	DEVELOPMENT = 'Development',
+	DESIGN = 'Design',
+	DEVOPS = 'DevOps',
+	QA = 'QA',
+	MANAGEMENT = 'Management',
+}
 
-export type SeniorityLevelType = 'Junior' | 'Associate' | 'Senior' | 'Lead';
+export enum SeniorityLevel {
+	JUNIOR = 'Junior',
+	ASSOCIATE = 'Associate',
+	SENIOR = 'Senior',
+	LEAD = 'Lead',
+}
 
 export type Job = {
 	id: number;
@@ -16,7 +31,7 @@ export type Job = {
 
 	jobType: JobType;
 	areaType: AreaType;
-	seniorityLevel: SeniorityLevelType;
+	seniorityLevel: SeniorityLevel;
 
 	tags: string[];
 };

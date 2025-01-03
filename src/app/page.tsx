@@ -79,7 +79,7 @@ function Home() {
 	const sortedData = useMemo(() => {
 		return filteredData?.sort((a, b) => {
 			if (state.orderBy === 'Most recent') return b.createdAt.getTime() - a.createdAt.getTime();
-			if (state.orderBy === 'Best pay') return b.yearlySalary - a.yearlySalary;
+			if (state.orderBy === 'Best pay') return b.annualSalary - a.annualSalary;
 
 			return 1;
 		});

@@ -26,7 +26,7 @@ export type Job = {
 	shortDescription: string;
 	description: string;
 
-	yearlySalary: number;
+	annualSalary: number;
 	createdAt: Date;
 
 	jobType: JobType;

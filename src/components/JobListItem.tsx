@@ -62,7 +62,7 @@ function JobListItem({ data, active, ...props }: JobListItemProps) {
 
 							<Flex style={{ flex: 1 }}>
 								<Badge style={{ backgroundColor: '#155e28', color: 'white', borderColor: '#155e28' }}>
-									<>{NumberFormatter.format(data.yearlySalary, 'USD')} /yr</>
+									<>{NumberFormatter.format(data.annualSalary, 'USD')} /yr</>
 								</Badge>
 							</Flex>
 

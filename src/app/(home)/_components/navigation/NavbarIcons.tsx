@@ -8,6 +8,7 @@ import { logoutAction } from '../../_lib/actions';
 
 export default function NavbarIcons() {
 	const session = use(auth());
+	const defaultAvatar = 'https://ui-avatars.com/api/?name=Guest&size=64&rounded=true';
 
 	return (
 		<div className='flex items-center gap-2'>
@@ -18,10 +19,10 @@ export default function NavbarIcons() {
 			</form>
 
 			<Image
-				className='bordered w-10 rounded-full'
-				width={20}
-				height={20}
-				src={session?.user?.image ?? ''}
+				className='bordered rounded-full'
+				width={40}
+				height={40}
+				src={session?.user?.image ?? defaultAvatar}
 				alt='avatar'
 			/>
 		</div>

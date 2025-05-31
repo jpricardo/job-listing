@@ -3,7 +3,7 @@ import { Flex } from '@jpricardo/component-library';
 import { useCallback, useTransition } from 'react';
 
 import Container from '@/app/(home)/_components/containers/Container';
-import useObjectReducer from '@/hooks/useObjectReducer';
+import useObjectReducer from '@/app/_hooks/useObjectReducer';
 
 import Controls from './_components/Controls';
 import JobList from './_components/JobList';

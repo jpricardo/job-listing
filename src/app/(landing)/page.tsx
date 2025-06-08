@@ -1,11 +1,7 @@
-'use client';
 import { Button, Typography } from '@jpricardo/component-library';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function Landing() {
-	const router = useRouter();
-
 	return (
 		<div className='flex max-w-10/12 flex-col items-center justify-center gap-4'>
 			<Typography.Headline size='large' className='text-center'>

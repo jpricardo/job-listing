@@ -1,7 +1,12 @@
 import { Button, Container, Input, Typography } from '@jpricardo/component-library';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { githubSSOFormAction, loginFormAction } from './_lib/actions';
+
+export const metadata: Metadata = {
+	title: 'Login',
+};
 
 export default function LoginPage() {
 	return (

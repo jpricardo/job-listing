@@ -3,10 +3,16 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 
+import { appName } from './_lib/constants';
+
 import './globals.css';
 
 export const metadata: Metadata = {
-	title: 'Job Listing',
+	title: {
+		template: `%s | ${appName}`,
+		default: appName,
+	},
+	applicationName: appName,
 	description: 'Job listing app, built with Next, Tailwind and Ant Design',
 };
 

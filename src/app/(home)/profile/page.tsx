@@ -1,6 +1,11 @@
 import { Flex } from '@jpricardo/component-library';
+import type { Metadata } from 'next';
 
 import Container from '@/app/(home)/_components/containers/Container';
+
+export const metadata: Metadata = {
+	title: 'Profile',
+};
 
 export default function ProfilePage() {
 	return (

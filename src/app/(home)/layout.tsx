@@ -1,6 +1,7 @@
 import { Container, Typography } from '@jpricardo/component-library';
 import Link from 'next/link';
 
+import Breadcrumbs from './_components/navigation/Breadcrumbs';
 import Navbar from './_components/navigation/Navbar';
 import NavbarIcons from './_components/navigation/NavbarIcons';
 import NavbarUsername from './_components/navigation/NavbarUsername';
@@ -21,6 +22,8 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
 				<Navbar icons={<NavbarIcons />}>
 					<NavbarUsername />
 				</Navbar>
+
+				<Breadcrumbs />
 
 				{children}
 

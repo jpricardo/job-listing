@@ -9,7 +9,7 @@ export default function SideMenu() {
 	return (
 		<Menu
 			activeKey={pathname.split('/')[1]}
-			onChange={(key) => router.push(key.toString())}
+			onChange={(key) => router.push(`/${key.toString()}`)}
 			items={[
 				{
 					key: 'home',

@@ -19,7 +19,7 @@ export default function Breadcrumbs() {
 							<Typography.Footnote className='capitalize hover:underline'>{item}</Typography.Footnote>
 						</Link>
 
-						{idx > 0 && idx < arr.length - 1 && <Typography.Footnote>/</Typography.Footnote>}
+						{arr.length > 0 && idx < arr.length - 1 && <Typography.Footnote>/</Typography.Footnote>}
 					</Fragment>
 				);
 			})}

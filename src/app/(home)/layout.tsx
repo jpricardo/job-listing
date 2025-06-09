@@ -12,7 +12,7 @@ type HomeLayoutProps = Readonly<{ children: React.ReactNode }>;
 export default function HomeLayout({ children }: HomeLayoutProps) {
 	return (
 		<main className='flex min-h-screen flex-row'>
-			<aside className='h-screen flex-1/12'>
+			<aside className='sticky top-0 h-screen flex-1/12'>
 				<Container className='h-full w-full rounded-none p-2!'>
 					<SideMenu />
 				</Container>

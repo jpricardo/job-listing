@@ -1,61 +1,43 @@
-import { Badge, Flex, Typography } from '@jpricardo/component-library';
-import { memo } from 'react';
+import { Button, Typography } from '@jpricardo/component-library';
+import Link from 'next/link';
+import { use } from 'react';
 
-import Container from '@/app/(home)/_components/containers/Container';
-import NumberFormatter from '@/app/_lib/format/number';
+import { auth } from '@/app/_lib/auth';
 import { getDateDifferenceInDays } from '@/app/_lib/helpers';
+import { Job } from '@/app/_lib/models/job.model';
 
 type JobListItemProps = React.HTMLAttributes<HTMLDivElement> & {
-	data: any;
+	data: Job;
 	active?: boolean;
 };
 
-/**
- * Component representing an entry in the Job List
- */
-function JobListItem({ data, active, style, ...props }: JobListItemProps) {
+export default function JobListItem({ data, active, ...props }: JobListItemProps) {
 	const daysAgo = getDateDifferenceInDays(data.createdAt, new Date());
+	const href = `/jobs/${data.id.toString()}`;
+	const session = use(auth());
 
 	return (
-		<Container hover style={{ padding: '0.75rem', userSelect: 'none', ...style }} {...props}>
-			<Flex vertical style={{ gap: '1rem' }}>
-				<Flex vertical style={{ gap: '.5rem' }}>
-					<Flex vertical style={{ gap: '.25rem' }}>
-						<Flex style={{ gap: '1rem', alignItems: 'center' }}>
-							<Typography.Title>{data.title}</Typography.Title>
+		<div className='flex flex-row justify-between py-2' {...props}>
+			<div className='flex flex-col'>
+				<Link href={href} className='hover:underline'>
+					<Typography.Body>{data.title}</Typography.Body>
+					<Typography.Footnote> - {data.shortDescription}</Typography.Footnote>
+				</Link>
 
-							<Flex style={{ flex: 1 }}>
-								<Badge style={{ backgroundColor: '#155e28', color: 'white', borderColor: '#155e28' }}>
-									<>{NumberFormatter.format(data.annualSalary, 'USD')} /yr</>
-								</Badge>
-							</Flex>
+				<Typography.Footnote>
+					{daysAgo === 0 && 'Today'}
+					{daysAgo === 1 && 'Yesterday'}
+					{daysAgo > 1 && <>{daysAgo} days ago</>}
+				</Typography.Footnote>
+			</div>
 
-							<Typography.Footnote>
-								{daysAgo === 0 && 'Today'}
-								{daysAgo === 1 && 'Yesterday'}
-								{daysAgo > 1 && <>{daysAgo} days ago</>}
-							</Typography.Footnote>
-						</Flex>
-						<Typography.Footnote>{data.company}</Typography.Footnote>
-					</Flex>
+			<div className='flex flex-row items-center gap-2'>
+				{session && <Button variant='text'>Save</Button>}
 
-					<Flex style={{ flexWrap: 'wrap', gap: '.25rem', alignItems: 'center' }}>
-						<Badge>{data.areaType}</Badge>
-
-						<Badge>{data.jobType}</Badge>
-
-						<Badge>{data.seniorityLevel}</Badge>
-
-						{/* {data.tags.map((tag) => (
-							<Badge key={tag}>{tag}</Badge>
-						))} */}
-					</Flex>
-				</Flex>
-
-				<Typography.Body>{data.shortDescription}</Typography.Body>
-			</Flex>
-		</Container>
+				<Link href={href}>
+					<Button>Apply</Button>
+				</Link>
+			</div>
+		</div>
 	);
 }
-
-export default memo(JobListItem);

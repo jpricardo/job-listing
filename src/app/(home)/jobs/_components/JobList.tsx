@@ -1,54 +1,32 @@
-import { Typography } from '@jpricardo/component-library';
-import { useMemo } from 'react';
+import { Job } from '@/app/_lib/models/job.model';
 
 import JobListItem from './JobListItem';
 
-type JobListProps = {
-	currentPage: number;
-	itemsPerPage: number;
+export function JobListSkeleton() {
+	const items = Array.from({ length: 2 });
 
-	items?: any[];
+	return (
+		<div className='flex flex-col gap-2'>
+			{items.map((_, index) => (
+				<div className='animate-pulse p-6 backdrop-brightness-90 dark:backdrop-brightness-120' key={index} />
+			))}
+		</div>
+	);
+}
 
-	activeId: number | undefined;
-	onClick: (id?: number) => void;
-
-	loading?: boolean;
-};
+type Props = Readonly<{ items: Promise<Job[]> }>;
 
 /**
  * Component representing the Job list
  */
-export default function JobList({
-	currentPage,
-	itemsPerPage,
-	items,
-	activeId,
-	onClick: setActiveId,
-	loading,
-}: JobListProps) {
-	const itemsInPage = useMemo(() => {
-		return items?.filter((_, index) => {
-			const startIndex = currentPage * itemsPerPage;
-			return index >= startIndex && index < startIndex + itemsPerPage;
-		});
-	}, [items, currentPage, itemsPerPage]);
+export default async function JobList({ items }: Props) {
+	const jobs = await items;
 
-	// TODO - Loading state
 	return (
 		<div className='flex flex-col gap-2'>
-			<Typography.Footnote>
-				{items?.length} results found ({itemsInPage?.length} in this page)
-			</Typography.Footnote>
-
-			{!items && <Typography.Footnote>No data</Typography.Footnote>}
-
-			<div className='flex flex-col gap-2 p-1'>
-				{itemsInPage?.map((item, index) => {
-					return (
-						<JobListItem key={index} data={item} onClick={() => setActiveId(item.id)} active={item.id === activeId} />
-					);
-				})}
-			</div>
+			{jobs.map((item, index) => (
+				<JobListItem key={index} data={item} />
+			))}
 		</div>
 	);
 }

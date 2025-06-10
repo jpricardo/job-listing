@@ -18,7 +18,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
 				</Container>
 			</aside>
 
-			<div className='flex flex-11/12 flex-col gap-4 px-4 py-0'>
+			<div className='flex flex-11/12 flex-col gap-4 px-8 py-0'>
 				<Navbar icons={<NavbarIcons />}>
 					<NavbarUsername />
 				</Navbar>

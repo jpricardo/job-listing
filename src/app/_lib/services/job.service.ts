@@ -1,3 +1,4 @@
+import { getRandomSample } from '../helpers';
 import { Job } from '../models/job.model';
 import { IDType } from '../types';
 import Service from './service';
@@ -31,6 +32,36 @@ const jobs: Job[] = [
 
 		companyId: 2,
 	},
+
+	{
+		id: 4,
+		title: 'Fullstack Engineer',
+		shortDescription: 'Short description',
+		description: 'Fourth job description',
+		createdAt: new Date(),
+
+		companyId: 3,
+	},
+
+	{
+		id: 5,
+		title: 'Trainee',
+		shortDescription: 'Short description',
+		description: 'Fifth job description',
+		createdAt: new Date(),
+
+		companyId: 3,
+	},
+
+	{
+		id: 6,
+		title: 'Tech Lead',
+		shortDescription: 'Short description',
+		description: 'Sixth job description',
+		createdAt: new Date(),
+
+		companyId: 3,
+	},
 ];
 
 export default class JobService extends Service {
@@ -43,5 +74,10 @@ export default class JobService extends Service {
 
 	public async getById(id: IDType): Promise<Job | undefined> {
 		return this.request(jobs.find((job) => job.id.toString() === id.toString()));
+	}
+
+	public async getRelated(id: IDType): Promise<Job[]> {
+		console.log('Fetching jobs related to ' + id);
+		return this.request(getRandomSample(jobs, 5));
 	}
 }

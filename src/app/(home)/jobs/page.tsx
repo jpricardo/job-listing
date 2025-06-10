@@ -15,11 +15,11 @@ export default function JobsPage() {
 
 	return (
 		<div className='flex flex-row gap-4'>
-			<div className='flex flex-8/12 flex-col'>
+			<div className='flex flex-9/12 flex-col'>
 				<CompanyList items={companies} />
 			</div>
 
-			<div className='flex flex-4/12'>tags</div>
+			<div className='flex flex-3/12'>tags</div>
 		</div>
 	);
 }

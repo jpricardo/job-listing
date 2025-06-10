@@ -17,7 +17,7 @@ export default function JobListItem({ data, active, ...props }: JobListItemProps
 	const session = use(auth());
 
 	return (
-		<div className='flex flex-row justify-between py-2' {...props}>
+		<div className='flex flex-row justify-between' {...props}>
 			<div className='flex flex-col'>
 				<Link href={href} className='hover:underline'>
 					<Typography.Body>{data.title}</Typography.Body>

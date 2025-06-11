@@ -1,6 +1,9 @@
 import { Button, Container, Input, Typography } from '@jpricardo/component-library';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+
+import { auth } from '@/app/_lib/auth';
 
 import { githubSSOFormAction, loginFormAction } from './_lib/actions';
 
@@ -8,7 +11,11 @@ export const metadata: Metadata = {
 	title: 'Login',
 };
 
-export default function LoginPage() {
+export default async function LoginPage() {
+	const session = await auth();
+
+	if (session) return redirect('/home');
+
 	return (
 		<Container className='flex w-2xs max-w-10/12 flex-col items-center justify-center gap-6'>
 			<Typography.Title>Authentication</Typography.Title>

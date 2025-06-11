@@ -1,27 +1,33 @@
 import { Button, Typography } from '@jpricardo/component-library';
 import Link from 'next/link';
-import { use } from 'react';
+import { notFound } from 'next/navigation';
 
 import { auth } from '@/app/_lib/auth';
 import { getDateDifferenceInDays } from '@/app/_lib/helpers';
-import { Job } from '@/app/_lib/models/job.model';
+import JobService from '@/app/_lib/services/job.service';
+import { IDType } from '@/app/_lib/types';
 
-type JobListItemProps = React.HTMLAttributes<HTMLDivElement> & {
-	data: Job;
-	active?: boolean;
-};
+const jobService = new JobService();
 
-export default function JobListItem({ data, active, ...props }: JobListItemProps) {
-	const daysAgo = getDateDifferenceInDays(data.createdAt, new Date());
-	const href = `/jobs/${data.id.toString()}`;
-	const session = use(auth());
+export function JobListItemSkeleton() {
+	return <div className='h-8 w-full animate-pulse backdrop-brightness-80 dark:backdrop-brightness-120' />;
+}
+
+type JobListItemProps = React.HTMLAttributes<HTMLDivElement> & { jobId: IDType };
+export default async function JobListItem({ jobId, ...props }: JobListItemProps) {
+	const job = await jobService.getById(jobId);
+	if (!job) return notFound();
+
+	const daysAgo = getDateDifferenceInDays(job.createdAt, new Date());
+	const href = `/jobs/${jobId.toString()}`;
+	const session = await auth();
 
 	return (
 		<div className='flex flex-row justify-between' {...props}>
 			<div className='flex flex-col'>
 				<Link href={href} className='hover:underline'>
-					<Typography.Body>{data.title}</Typography.Body>
-					<Typography.Footnote> - {data.shortDescription}</Typography.Footnote>
+					<Typography.Body>{job.title}</Typography.Body>
+					<Typography.Footnote> - {job.shortDescription}</Typography.Footnote>
 				</Link>
 
 				<Typography.Footnote>

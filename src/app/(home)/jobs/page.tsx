@@ -1,22 +1,19 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
-import CompanyService from '@/app/_lib/services/company.service';
-
-import CompanyList from './_components/CompanyList';
-
-const companyService = new CompanyService();
+import CompanyList, { CompanyListSkeleton } from './_components/CompanyList';
 
 export const metadata: Metadata = {
 	title: 'Jobs',
 };
 
 export default function JobsPage() {
-	const companies = companyService.getAll();
-
 	return (
 		<div className='flex flex-row gap-4'>
 			<div className='flex flex-9/12 flex-col'>
-				<CompanyList items={companies} />
+				<Suspense fallback={<CompanyListSkeleton />}>
+					<CompanyList />
+				</Suspense>
 			</div>
 
 			<div className='flex flex-3/12'>tags</div>

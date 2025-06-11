@@ -4,12 +4,24 @@ import { notFound } from 'next/navigation';
 import CompanyService from '@/app/_lib/services/company.service';
 import { IDType } from '@/app/_lib/types';
 
-import CompanyAvatar from './CompanyAvatar';
+import CompanyAvatar, { CompanyAvatarSkeleton } from './CompanyAvatar';
 
 const companyService = new CompanyService();
 
-type Props = Readonly<{ companyId: IDType }>;
+export function CompanyDetailsSkeleton() {
+	return (
+		<div className='flex flex-row gap-4'>
+			<CompanyAvatarSkeleton />
 
+			<div className='flex flex-col justify-center gap-2'>
+				<div className='h-6 w-24 backdrop-brightness-80 dark:backdrop-brightness-120' />
+				<div className='h-4 w-32 backdrop-brightness-80 dark:backdrop-brightness-120' />
+			</div>
+		</div>
+	);
+}
+
+type Props = Readonly<{ companyId: IDType }>;
 export default async function CompanyDetails({ companyId }: Props) {
 	const company = await companyService.getById(companyId);
 

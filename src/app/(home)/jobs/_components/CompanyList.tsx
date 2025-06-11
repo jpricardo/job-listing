@@ -1,21 +1,36 @@
 import { Typography } from '@jpricardo/component-library';
+import { Suspense } from 'react';
 
-import { Company } from '@/app/_lib/models/company.model';
+import CompanyService from '@/app/_lib/services/company.service';
 
-import CompanyListItem from './CompanyListItem';
+import CompanyListItem, { CompanyListItemSkeleton } from './CompanyListItem';
 
-type Props = Readonly<{ items: Promise<Company[]> }>;
+const companyService = new CompanyService();
 
-export default async function CompanyList({ items }: Props) {
-	const companies = await items;
+export function CompanyListSkeleton() {
+	const items = Array.from({ length: 6 });
+
+	return (
+		<div className='flex flex-col gap-2'>
+			{items.map((_, index) => (
+				<CompanyListItemSkeleton key={index} />
+			))}
+		</div>
+	);
+}
+
+export default async function CompanyList() {
+	const companies = await companyService.getAll();
 
 	return (
 		<div className='flex flex-col gap-2'>
 			{!companies.length && <Typography.Footnote>No data</Typography.Footnote>}
 
 			<div className='flex flex-col gap-4'>
-				{companies.map((item, index) => (
-					<CompanyListItem key={index} data={item} />
+				{companies.map((item) => (
+					<Suspense key={item.id} fallback={<CompanyListItemSkeleton />}>
+						<CompanyListItem companyId={item.id} />
+					</Suspense>
 				))}
 			</div>
 		</div>

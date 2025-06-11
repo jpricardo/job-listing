@@ -1,6 +1,11 @@
-import { Job } from '@/app/_lib/models/job.model';
+import { Suspense } from 'react';
 
-import JobListItem from './JobListItem';
+import JobService from '@/app/_lib/services/job.service';
+import { IDType } from '@/app/_lib/types';
+
+import JobListItem, { JobListItemSkeleton } from './JobListItem';
+
+const jobService = new JobService();
 
 export function JobListSkeleton() {
 	const items = Array.from({ length: 2 });
@@ -8,24 +13,26 @@ export function JobListSkeleton() {
 	return (
 		<div className='flex flex-col gap-2'>
 			{items.map((_, index) => (
-				<div className='animate-pulse p-6 backdrop-brightness-90 dark:backdrop-brightness-120' key={index} />
+				<JobListItemSkeleton key={index} />
 			))}
 		</div>
 	);
 }
 
-type Props = Readonly<{ items: Promise<Job[]> }>;
+type Props = Readonly<{ companyId: IDType }>;
 
 /**
  * Component representing the Job list
  */
-export default async function JobList({ items }: Props) {
-	const jobs = await items;
+export default async function JobList({ companyId }: Props) {
+	const jobs = await jobService.getAll({ companyId });
 
 	return (
 		<div className='flex flex-col gap-2'>
-			{jobs.map((item, index) => (
-				<JobListItem key={index} data={item} />
+			{jobs.map((item) => (
+				<Suspense key={item.id} fallback={<JobListItemSkeleton />}>
+					<JobListItem jobId={item.id} />
+				</Suspense>
 			))}
 		</div>
 	);

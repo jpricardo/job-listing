@@ -1,25 +1,30 @@
 import { Container } from '@jpricardo/component-library';
 import { Suspense } from 'react';
 
-import { Company } from '@/app/_lib/models/company.model';
-import JobService from '@/app/_lib/services/job.service';
+import { IDType } from '@/app/_lib/types';
 
-import CompanyDetails from './CompanyDetails';
+import CompanyDetails, { CompanyDetailsSkeleton } from './CompanyDetails';
 import JobList, { JobListSkeleton } from './JobList';
 
-const jobService = new JobService();
+export function CompanyListItemSkeleton() {
+	return (
+		<Container className='flex h-48 animate-pulse flex-col gap-4'>
+			<CompanyDetailsSkeleton />
+			<JobListSkeleton />
+		</Container>
+	);
+}
 
-type Props = Readonly<{ data: Company }>;
-
-export default function CompanyListItem({ data }: Props) {
-	const jobs = jobService.getAll({ companyId: data.id });
-
+type Props = Readonly<{ companyId: IDType }>;
+export default function CompanyListItem({ companyId }: Props) {
 	return (
 		<Container className='flex flex-col gap-4'>
-			<CompanyDetails companyId={data.id} />
+			<Suspense fallback={<CompanyDetailsSkeleton />}>
+				<CompanyDetails companyId={companyId} />
+			</Suspense>
 
 			<Suspense fallback={<JobListSkeleton />}>
-				<JobList items={jobs} />
+				<JobList companyId={companyId} />
 			</Suspense>
 		</Container>
 	);

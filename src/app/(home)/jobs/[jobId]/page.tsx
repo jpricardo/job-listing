@@ -8,7 +8,8 @@ import { getDateDifferenceInDays } from '@/app/_lib/helpers';
 import JobService from '@/app/_lib/services/job.service';
 import { IDType } from '@/app/_lib/types';
 
-import CompanyDetails from '../_components/CompanyDetails';
+import CompanyDetails, { CompanyDetailsSkeleton } from '../_components/CompanyDetails';
+import ApplicationForm from './_components/ApplicationForm';
 import RelatedJobs from './_components/RelatedJobs';
 
 type Props = Readonly<{ params: Promise<{ jobId: IDType }> }>;
@@ -35,13 +36,11 @@ export default async function JobDetailsPage({ params }: Props) {
 		<div className='flex flex-row gap-4'>
 			<Container className='flex flex-8/12 flex-col gap-6'>
 				<div className='flex flex-row items-start justify-between gap-4'>
-					<CompanyDetails companyId={data.companyId} />
+					<Suspense fallback={<CompanyDetailsSkeleton />}>
+						<CompanyDetails companyId={data.companyId} />
+					</Suspense>
 
-					<div className='flex flex-row items-center gap-2'>
-						{session && <Button variant='text'>Save</Button>}
-
-						<Button>Apply</Button>
-					</div>
+					<div className='flex flex-row items-center gap-2'>{session && <Button variant='text'>Save</Button>}</div>
 				</div>
 
 				<Divider />
@@ -60,6 +59,16 @@ export default async function JobDetailsPage({ params }: Props) {
 					<Typography.Title>About the job</Typography.Title>
 
 					<Typography.Body>{data.description}</Typography.Body>
+				</div>
+
+				<Divider />
+
+				<div className='flex flex-col gap-2'>
+					<Typography.Title>Application Form</Typography.Title>
+
+					<Suspense fallback={<>Loading...</>}>
+						<ApplicationForm jobId={jobId} />
+					</Suspense>
 				</div>
 			</Container>
 

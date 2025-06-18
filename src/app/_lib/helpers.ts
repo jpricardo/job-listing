@@ -1,6 +1,6 @@
 export const getRandomNumber = (min = 0, max = 1) => min + Math.floor(Math.random() * (max - min));
 
-export const getRandomItem = <TData>(arr: TData[]) => arr[getRandomNumber(0, arr.length)];
+export const getRandomItem = <TData>(arr: TData[]) => arr.at(getRandomNumber(0, arr.length));
 
 export const getRandomSample = <TData>(arr: TData[], sampleSize = 1) => {
 	let validPicks: TData[] = [...arr];
@@ -9,7 +9,7 @@ export const getRandomSample = <TData>(arr: TData[], sampleSize = 1) => {
 	for (let i = 0; i < sampleSize; i++) {
 		const newItem = getRandomItem(validPicks);
 		validPicks = validPicks.filter((item) => item !== newItem);
-		picks.push(newItem);
+		if (newItem) picks.push(newItem);
 	}
 
 	return picks;

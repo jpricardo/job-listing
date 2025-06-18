@@ -1,7 +1,27 @@
-import { getRandomSample } from '../helpers';
+import { CreateJobApplicationDto } from '../dto/create-job-application.dto';
+import { getRandomItem, getRandomSample } from '../helpers';
+import { JobApplication } from '../models/job-application.model';
 import { Job } from '../models/job.model';
 import { IDType } from '../types';
 import Service from './service';
+
+const jobApplications: JobApplication[] = [
+	[
+		{ id: 1, label: 'Tell us about yourself', type: 'text' },
+		{ id: 2, label: 'Why do you want to work here?', type: 'text' },
+		{
+			id: 3,
+			label: 'How much experience do you have?',
+			type: 'select',
+			options: [
+				{ id: 1, label: '> 1 year' },
+				{ id: 2, label: '1-2 years' },
+				{ id: 3, label: '2-3 years' },
+				{ id: 4, label: '3+ years' },
+			],
+		},
+	],
+];
 
 const jobs: Job[] = [
 	{
@@ -79,5 +99,15 @@ export default class JobService extends Service {
 	public async getRelated(id: IDType): Promise<Job[]> {
 		console.log('Fetching jobs related to ' + id);
 		return this.request(getRandomSample(jobs, 5));
+	}
+
+	public async getApplicationById(id: IDType): Promise<JobApplication | undefined> {
+		console.log('Fetching job application form for ' + id);
+		return this.request(getRandomItem(jobApplications));
+	}
+
+	public async sendApplication(id: IDType, payload: CreateJobApplicationDto) {
+		console.log('Sending job application for ' + id + ':', payload);
+		return this.request(void 0);
 	}
 }

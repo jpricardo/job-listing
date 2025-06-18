@@ -8,7 +8,7 @@ type NavbarProps = Readonly<{
 
 function Navbar({ children, icons }: NavbarProps) {
 	return (
-		<Surface className='sticky top-0 right-0 left-0 z-2 -mx-4 p-4!'>
+		<Surface className='sticky top-0 right-0 left-0 z-2 px-8! py-4!'>
 			<div className='flex justify-between gap-2'>
 				{children}
 				{icons}

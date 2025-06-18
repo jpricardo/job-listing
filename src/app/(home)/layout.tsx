@@ -18,20 +18,22 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
 				</Container>
 			</aside>
 
-			<div className='flex flex-11/12 flex-col gap-4 px-8 py-0'>
+			<div className='flex flex-11/12 flex-col gap-4'>
 				<Navbar icons={<NavbarIcons />}>
 					<NavbarUsername />
 				</Navbar>
 
-				<Breadcrumbs />
+				<div className='flex flex-col gap-4 px-8'>
+					<Breadcrumbs />
 
-				{children}
+					{children}
 
-				<footer className='flex w-full justify-end'>
-					<Link href='https://github.com/jpricardo' target='_blank'>
-						<Typography.Footnote>with ❤ by @jpricardo</Typography.Footnote>
-					</Link>
-				</footer>
+					<footer className='flex w-full justify-end'>
+						<Link href='https://github.com/jpricardo' target='_blank'>
+							<Typography.Footnote>with ❤ by @jpricardo</Typography.Footnote>
+						</Link>
+					</footer>
+				</div>
 			</div>
 		</main>
 	);

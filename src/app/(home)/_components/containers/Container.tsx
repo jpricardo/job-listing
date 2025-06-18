@@ -8,9 +8,8 @@ import { memo } from 'react';
 type ContainerProps = Omit<LibContainerProps, 'ref'> & {
 	title?: React.ReactNode;
 	addon?: React.ReactNode;
-	hover?: boolean;
 };
-function Container({ title, addon, children, hover, ...props }: ContainerProps) {
+function Container({ title, addon, children, ...props }: ContainerProps) {
 	return (
 		<LibContainer {...props}>
 			{!!title && (

@@ -7,8 +7,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		GitHub,
 		Credentials({
 			credentials: { username: {}, password: {} },
-			authorize: (credentials, request) => {
-				let user = null;
+			authorize: () => {
+				const user = null;
 				// TODO - Auth implementation
 				return user;
 			},

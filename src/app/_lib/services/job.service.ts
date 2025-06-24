@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { CreateJobApplicationDto } from '../dto/create-job-application.dto';
 import { getRandomItem, getRandomSample } from '../helpers';
 import { JobApplication } from '../models/job-application.model';

@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { Company } from '../models/company.model';
 import { IDType } from '../types';
 import Service from './service';

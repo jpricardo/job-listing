@@ -10,14 +10,14 @@ const companyService = new CompanyService();
 
 export function CompanyDetailsSkeleton() {
 	return (
-		<div className='flex flex-row gap-4'>
+		<article className='flex flex-row gap-4'>
 			<CompanyAvatarSkeleton />
 
 			<div className='flex flex-col justify-center gap-2'>
 				<div className='h-6 w-24 backdrop-brightness-80 dark:backdrop-brightness-120' />
 				<div className='h-4 w-32 backdrop-brightness-80 dark:backdrop-brightness-120' />
 			</div>
-		</div>
+		</article>
 	);
 }
 
@@ -28,11 +28,11 @@ export default async function CompanyDetails({ companyId }: Props) {
 	if (!company) notFound();
 
 	return (
-		<div className='flex flex-col gap-4'>
-			<div className='flex flex-row gap-4'>
+		<article className='flex flex-col gap-4'>
+			<section className='flex flex-row gap-4'>
 				<CompanyAvatar companyName={company.name} />
 
-				<div className='flex flex-col justify-center gap-0'>
+				<section className='flex flex-col justify-center gap-0'>
 					<div className='flex flex-row items-center gap-4'>
 						<Typography.Title size='small'>{company.name}</Typography.Title>
 
@@ -43,10 +43,10 @@ export default async function CompanyDetails({ companyId }: Props) {
 					</div>
 
 					<Typography.Footnote>{company.description}</Typography.Footnote>
-				</div>
-			</div>
+				</section>
+			</section>
 
-			<div className='flex flex-row gap-2'>
+			<section className='flex flex-row gap-2'>
 				{company.tags.map((tag, idx) => {
 					return (
 						<Typography.Footnote
@@ -58,7 +58,7 @@ export default async function CompanyDetails({ companyId }: Props) {
 						</Typography.Footnote>
 					);
 				})}
-			</div>
-		</div>
+			</section>
+		</article>
 	);
 }

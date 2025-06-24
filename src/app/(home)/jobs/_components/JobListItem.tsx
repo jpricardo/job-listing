@@ -23,7 +23,7 @@ export default async function JobListItem({ jobId, ...props }: JobListItemProps)
 	const session = await auth();
 
 	return (
-		<div className='flex flex-row justify-between' {...props}>
+		<article className='flex flex-row justify-between' {...props}>
 			<div className='flex flex-col'>
 				<Link href={href} className='hover:underline'>
 					<Typography.Body>{job.title}</Typography.Body>
@@ -44,6 +44,6 @@ export default async function JobListItem({ jobId, ...props }: JobListItemProps)
 					<Button>Apply</Button>
 				</Link>
 			</div>
-		</div>
+		</article>
 	);
 }

@@ -11,7 +11,7 @@ type HomeLayoutProps = Readonly<{ children: React.ReactNode }>;
 
 export default function HomeLayout({ children }: HomeLayoutProps) {
 	return (
-		<main className='flex min-h-screen flex-row'>
+		<div className='flex min-h-screen flex-row'>
 			<aside className='sticky top-0 h-screen flex-1/12'>
 				<Container className='h-full w-full rounded-none p-2!'>
 					<SideMenu />
@@ -23,18 +23,18 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
 					<NavbarUsername />
 				</Navbar>
 
-				<div className='flex flex-col gap-4 px-8'>
+				<main className='flex flex-col gap-4 px-8'>
 					<Breadcrumbs />
 
 					{children}
 
-					<footer className='flex w-full justify-end'>
+					<footer className='flex w-full justify-end pb-4'>
 						<Link href='https://github.com/jpricardo' target='_blank'>
 							<Typography.Footnote>with ❤ by @jpricardo</Typography.Footnote>
 						</Link>
 					</footer>
-				</div>
+				</main>
 			</div>
-		</main>
+		</div>
 	);
 }

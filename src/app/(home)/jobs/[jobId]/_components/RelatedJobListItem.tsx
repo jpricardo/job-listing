@@ -24,7 +24,7 @@ export default async function RelatedJobListItem({ jobId }: Props) {
 	const daysAgo = getDateDifferenceInDays(job.createdAt, new Date());
 
 	return (
-		<div key={job.id} className='flex flex-row gap-2'>
+		<article key={job.id} className='flex flex-row gap-2'>
 			<CompanyAvatar companyName={company.name} size={48} />
 
 			<div className='flex flex-col gap-0'>
@@ -39,6 +39,6 @@ export default async function RelatedJobListItem({ jobId }: Props) {
 					{daysAgo > 1 && <>{daysAgo} days ago</>}
 				</Typography.Footnote>
 			</div>
-		</div>
+		</article>
 	);
 }

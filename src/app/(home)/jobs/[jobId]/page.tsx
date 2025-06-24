@@ -33,19 +33,19 @@ export default async function JobDetailsPage({ params }: Props) {
 	const daysAgo = getDateDifferenceInDays(data.createdAt, new Date());
 
 	return (
-		<div className='flex flex-row gap-4'>
+		<article className='flex flex-row gap-4'>
 			<Container className='flex flex-8/12 flex-col gap-6'>
-				<div className='flex flex-row items-start justify-between gap-4'>
+				<section className='flex flex-row items-start justify-between gap-4'>
 					<Suspense fallback={<CompanyDetailsSkeleton />}>
 						<CompanyDetails companyId={data.companyId} />
 					</Suspense>
 
 					<div className='flex flex-row items-center gap-2'>{session && <Button variant='text'>Save</Button>}</div>
-				</div>
+				</section>
 
 				<Divider />
 
-				<div className='flex flex-col'>
+				<section className='flex flex-col'>
 					<Typography.Title>{data.title}</Typography.Title>
 					<Typography.Body>{data.shortDescription}</Typography.Body>
 					<Typography.Footnote>
@@ -53,35 +53,39 @@ export default async function JobDetailsPage({ params }: Props) {
 						{daysAgo === 1 && 'Yesterday'}
 						{daysAgo > 1 && <>{daysAgo} days ago</>}
 					</Typography.Footnote>
-				</div>
+				</section>
 
-				<div className='flex flex-col gap-2'>
+				<section className='flex flex-col gap-2'>
 					<Typography.Title>About the job</Typography.Title>
 
 					<Typography.Body>{data.description}</Typography.Body>
-				</div>
+				</section>
 
 				<Divider />
 
-				<div className='flex flex-col gap-2'>
+				<section className='flex flex-col gap-2'>
 					<Typography.Title>Application Form</Typography.Title>
 
 					<Suspense fallback={<>Loading...</>}>
 						<ApplicationForm jobId={jobId} />
 					</Suspense>
-				</div>
+				</section>
 			</Container>
 
-			<Container className='flex flex-4/12 flex-col gap-4'>
-				<div className='flex flex-col gap-2'>
-					<Typography.Title size='small'>Similar Jobs</Typography.Title>
-					<Divider />
-				</div>
+			<aside className='flex flex-4/12'>
+				<Container className='h-min w-full'>
+					<article className='flex flex-col gap-4'>
+						<div className='flex flex-col gap-2'>
+							<Typography.Title size='small'>Similar Jobs</Typography.Title>
+							<Divider />
+						</div>
 
-				<Suspense fallback={<span>Loading...</span>}>
-					<RelatedJobs jobId={jobId} />
-				</Suspense>
-			</Container>
-		</div>
+						<Suspense fallback={<span>Loading...</span>}>
+							<RelatedJobs jobId={jobId} />
+						</Suspense>
+					</article>
+				</Container>
+			</aside>
+		</article>
 	);
 }

@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 export default function JobsPage() {
 	return (
 		<div className='flex flex-row gap-4'>
-			<div className='flex flex-9/12 flex-col'>
+			<article className='flex flex-9/12 flex-col'>
 				<Suspense fallback={<CompanyListSkeleton />}>
 					<CompanyList />
 				</Suspense>
-			</div>
+			</article>
 
-			<div className='flex flex-3/12'>tags</div>
+			<aside className='flex flex-3/12'>tags</aside>
 		</div>
 	);
 }

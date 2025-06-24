@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
-import JobService from '@/app/_lib/services/job.service';
-import { IDType } from '@/app/_lib/types';
+import JobService from '@/data/services/job.service';
+import { IDType } from '@/data/types';
 
 import JobListItem, { JobListItemSkeleton } from './JobListItem';
 

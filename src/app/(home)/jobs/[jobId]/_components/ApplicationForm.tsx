@@ -3,9 +3,9 @@ import { revalidatePath } from 'next/cache';
 import Form from 'next/form';
 import { notFound } from 'next/navigation';
 
-import { CreateJobApplicationDto } from '@/app/_lib/dto/create-job-application.dto';
-import JobService from '@/app/_lib/services/job.service';
-import { IDType } from '@/app/_lib/types';
+import { CreateJobApplicationDto } from '@/data/dto/create-job-application.dto';
+import JobService from '@/data/services/job.service';
+import { IDType } from '@/data/types';
 
 import ApplicationFormQuestion from './ApplicationFormQuestion';
 

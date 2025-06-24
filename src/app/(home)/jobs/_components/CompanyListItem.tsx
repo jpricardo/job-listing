@@ -1,7 +1,7 @@
 import { Container } from '@jpricardo/component-library';
 import { Suspense } from 'react';
 
-import { IDType } from '@/app/_lib/types';
+import { IDType } from '@/data/types';
 
 import CompanyDetails, { CompanyDetailsSkeleton } from './CompanyDetails';
 import JobList, { JobListSkeleton } from './JobList';

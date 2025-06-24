@@ -1,7 +1,7 @@
 import { Typography } from '@jpricardo/component-library';
 import { Suspense } from 'react';
 
-import CompanyService from '@/app/_lib/services/company.service';
+import CompanyService from '@/data/services/company.service';
 
 import CompanyListItem, { CompanyListItemSkeleton } from './CompanyListItem';
 

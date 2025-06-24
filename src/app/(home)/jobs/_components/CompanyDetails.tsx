@@ -1,8 +1,8 @@
 import { Typography } from '@jpricardo/component-library';
 import { notFound } from 'next/navigation';
 
-import CompanyService from '@/app/_lib/services/company.service';
-import { IDType } from '@/app/_lib/types';
+import CompanyService from '@/data/services/company.service';
+import { IDType } from '@/data/types';
 
 import CompanyAvatar, { CompanyAvatarSkeleton } from './CompanyAvatar';
 

@@ -5,8 +5,8 @@ import { Suspense } from 'react';
 
 import { auth } from '@/app/_lib/auth';
 import { getDateDifferenceInDays } from '@/app/_lib/helpers';
-import JobService from '@/app/_lib/services/job.service';
-import { IDType } from '@/app/_lib/types';
+import JobService from '@/data/services/job.service';
+import { IDType } from '@/data/types';
 
 import CompanyDetails, { CompanyDetailsSkeleton } from '../_components/CompanyDetails';
 import ApplicationForm from './_components/ApplicationForm';

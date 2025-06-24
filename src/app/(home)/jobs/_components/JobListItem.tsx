@@ -4,8 +4,8 @@ import { notFound } from 'next/navigation';
 
 import { auth } from '@/app/_lib/auth';
 import { getDateDifferenceInDays } from '@/app/_lib/helpers';
-import JobService from '@/app/_lib/services/job.service';
-import { IDType } from '@/app/_lib/types';
+import JobService from '@/data/services/job.service';
+import { IDType } from '@/data/types';
 
 const jobService = new JobService();
 

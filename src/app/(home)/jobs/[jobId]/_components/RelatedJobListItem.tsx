@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { getDateDifferenceInDays } from '@/app/_lib/helpers';
-import CompanyService from '@/app/_lib/services/company.service';
-import JobService from '@/app/_lib/services/job.service';
-import { IDType } from '@/app/_lib/types';
+import CompanyService from '@/data/services/company.service';
+import JobService from '@/data/services/job.service';
+import { IDType } from '@/data/types';
 
 import CompanyAvatar, { CompanyAvatarSkeleton } from '../../_components/CompanyAvatar';
 

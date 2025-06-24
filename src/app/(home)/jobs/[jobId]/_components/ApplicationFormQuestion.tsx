@@ -1,7 +1,7 @@
 'use client';
 import { Input, Select, Typography } from '@jpricardo/component-library';
 
-import { JobApplication } from '@/app/_lib/models/job-application.model';
+import { JobApplication } from '@/data/models/job-application.model';
 
 type Question = JobApplication[number];
 type QuestionTypes = Question['type'];

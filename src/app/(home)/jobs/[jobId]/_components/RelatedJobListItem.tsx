@@ -7,13 +7,25 @@ import CompanyService from '@/app/_lib/services/company.service';
 import JobService from '@/app/_lib/services/job.service';
 import { IDType } from '@/app/_lib/types';
 
-import CompanyAvatar from '../../_components/CompanyAvatar';
+import CompanyAvatar, { CompanyAvatarSkeleton } from '../../_components/CompanyAvatar';
 
 const jobService = new JobService();
 const companyService = new CompanyService();
 
-type Props = Readonly<{ jobId: IDType }>;
+export function RelatedJobListItemSkeleton() {
+	return (
+		<article className='flex flex-row gap-2'>
+			<CompanyAvatarSkeleton size={48} />
 
+			<div className='flex flex-col gap-2.5'>
+				<div className='h-5 w-32 animate-pulse backdrop-brightness-80 dark:backdrop-brightness-120' />
+				<div className='h-3 w-24 animate-pulse backdrop-brightness-80 dark:backdrop-brightness-120' />
+			</div>
+		</article>
+	);
+}
+
+type Props = Readonly<{ jobId: IDType }>;
 export default async function RelatedJobListItem({ jobId }: Props) {
 	const job = await jobService.getById(jobId);
 	if (!job) notFound();

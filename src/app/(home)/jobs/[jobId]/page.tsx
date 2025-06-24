@@ -10,7 +10,7 @@ import { IDType } from '@/app/_lib/types';
 
 import CompanyDetails, { CompanyDetailsSkeleton } from '../_components/CompanyDetails';
 import ApplicationForm from './_components/ApplicationForm';
-import RelatedJobs from './_components/RelatedJobs';
+import RelatedJobs, { RelatedJobsSkeleton } from './_components/RelatedJobs';
 
 type Props = Readonly<{ params: Promise<{ jobId: IDType }> }>;
 
@@ -80,7 +80,7 @@ export default async function JobDetailsPage({ params }: Props) {
 							<Divider />
 						</div>
 
-						<Suspense fallback={<span>Loading...</span>}>
+						<Suspense fallback={<RelatedJobsSkeleton />}>
 							<RelatedJobs jobId={jobId} />
 						</Suspense>
 					</article>

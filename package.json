@@ -15,7 +15,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
-		"@jpricardo/component-library": "^1.0.2-alpha",
+		"@jpricardo/component-library": "^1.0.3-alpha",
 		"@vercel/analytics": "^1.5.0",
 		"@vercel/speed-insights": "^1.2.0",
 		"axios": "^1.9.0",

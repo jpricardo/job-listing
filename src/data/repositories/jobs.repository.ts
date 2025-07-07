@@ -304,23 +304,23 @@ export default class JobsRepository extends InMemoryRepository implements IRepos
 	}
 
 	public async find(filters?: Partial<Job>): Promise<Job | undefined> {
-		return this.cache(['find', filters], () => this.items.find((job) => match(job, filters)));
+		return this.cache(['jobs', 'find', filters], () => this.items.find((job) => match(job, filters)));
 	}
 
 	public async findAll(filters?: Partial<Job>): Promise<Job[]> {
-		return this.cache(['findAll', filters], () => this.items.filter((job) => match(job, filters)));
+		return this.cache(['jobs', 'findAll', filters], () => this.items.filter((job) => match(job, filters)));
 	}
 
 	public async findRelated(filters?: Partial<Job>): Promise<Job[]> {
-		return this.cache(['findRelated', filters], () => getRandomSample(this.items, 5));
+		return this.cache(['jobs', 'findRelated', filters], () => getRandomSample(this.items, 5));
 	}
 
 	public async findApplication(filters?: Partial<Job>) {
-		return this.cache(['findApplication', filters], () => getRandomItem(jobApplications));
+		return this.cache(['jobs', 'findApplication', filters], () => getRandomItem(jobApplications));
 	}
 
 	public async registerApplication(filters: Partial<Job>, payload: CreateJobApplicationDto) {
 		console.log(payload);
-		return this.invalidateCache(['findApplication', filters]);
+		return this.invalidateCache(['jobs', 'findApplication', filters]);
 	}
 }

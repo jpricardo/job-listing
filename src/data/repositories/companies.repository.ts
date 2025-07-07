@@ -97,10 +97,10 @@ export default class CompaniesRepository extends InMemoryRepository implements I
 	}
 
 	find(filters?: Partial<Company> | undefined): Promise<Company | undefined> {
-		return this.cache(['find', filters], () => this.items.find((job) => match(job, filters)));
+		return this.cache(['companies', 'find', filters], () => this.items.find((job) => match(job, filters)));
 	}
 
 	findAll(filters?: Partial<Company> | undefined): Promise<Company[]> {
-		return this.cache(['findAll', filters], () => this.items.filter((job) => match(job, filters)));
+		return this.cache(['companies', 'findAll', filters], () => this.items.filter((job) => match(job, filters)));
 	}
 }

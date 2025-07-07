@@ -92,11 +92,11 @@ export default class TagsRepository extends InMemoryRepository implements IRepos
 	}
 
 	find(name?: string): Promise<string | undefined> {
-		return this.cache(['find', name], () => this.items.find((tag) => tag === name));
+		return this.cache(['tags', 'find', name], () => this.items.find((tag) => tag === name));
 	}
 
 	findAll(names?: string[]): Promise<string[]> {
-		return this.cache(['findAll', names], () => {
+		return this.cache(['tags', 'findAll', names], () => {
 			if (!names) return this.items;
 
 			return this.items.filter((tag) => names?.includes(tag));

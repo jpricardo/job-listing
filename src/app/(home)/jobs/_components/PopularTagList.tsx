@@ -1,6 +1,7 @@
 import { TagInfo } from '@/data/models/tag-info.model';
 import CompanyService from '@/data/services/company.service';
-import Link from 'next/link';
+
+import TagLink, { TagLinkSkeleton } from './TagLink';
 
 const companyService = new CompanyService();
 
@@ -35,25 +36,22 @@ export function PopularTagListSkeleton() {
 	return (
 		<div>
 			{items.map((_, index) => (
-				<div
-					key={index}
-					className='mx-2 my-1 inline-block h-4 w-16 animate-pulse backdrop-brightness-80 dark:backdrop-brightness-120'
-				/>
+				<TagLinkSkeleton key={index} />
 			))}
 		</div>
 	);
 }
 
-export default async function PopularTagList() {
-	const tags = await companyService.getPopularTags();
+type Props = Readonly<{ ammount: number }>;
+
+export default async function PopularTagList({ ammount }: Props) {
+	const tags = await companyService.getPopularTags(ammount);
 	const tagSizes = await getTagSizes(tags);
 
 	return (
 		<section>
 			{tags.map(({ name, count }) => (
-				<Link key={name} href='#' className='mx-2 my-1 inline-block hover:underline'>
-					<span className={tagSizes.get(count)}>{name}</span>
-				</Link>
+				<TagLink key={name} name={name} className={tagSizes.get(count)} />
 			))}
 		</section>
 	);

@@ -1,6 +1,7 @@
 import { Typography } from '@jpricardo/component-library';
 import { Suspense } from 'react';
 
+import { Company } from '@/data/models/company.model';
 import CompanyService from '@/data/services/company.service';
 
 import CompanyListItem, { CompanyListItemSkeleton } from './CompanyListItem';
@@ -19,8 +20,10 @@ export function CompanyListSkeleton() {
 	);
 }
 
-export default async function CompanyList() {
-	const companies = await companyService.getAll();
+type Props = Readonly<{ filters?: Partial<Company> }>;
+
+export default async function CompanyList({ filters }: Props) {
+	const companies = await companyService.getAll(filters);
 
 	return (
 		<div className='flex w-full flex-col gap-2'>

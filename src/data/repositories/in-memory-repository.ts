@@ -3,7 +3,7 @@ import 'server-only';
 import { timer } from '../helpers';
 
 export default abstract class InMemoryRepository {
-	private maxAge = 2 * 60 * 1000;
+	private maxAge = 5 * 60 * 1000;
 
 	protected agesMap = new Map<string, Date | null>();
 	protected valuesMap = new Map<string, unknown>();

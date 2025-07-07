@@ -4,10 +4,8 @@ import { notFound } from 'next/navigation';
 
 import { auth } from '@/app/_lib/auth';
 import { getDateDifferenceInDays } from '@/app/_lib/helpers';
-import JobService from '@/data/services/job.service';
+import jobService from '@/data/services/job.service';
 import { IDType } from '@/data/types';
-
-const jobService = new JobService();
 
 export function JobListItemSkeleton() {
 	return <div className='h-8 w-full animate-pulse backdrop-brightness-80 dark:backdrop-brightness-120' />;

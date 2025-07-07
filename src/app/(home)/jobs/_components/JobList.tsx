@@ -1,11 +1,9 @@
 import { Suspense } from 'react';
 
-import JobService from '@/data/services/job.service';
+import jobService from '@/data/services/job.service';
 import { IDType } from '@/data/types';
 
 import JobListItem, { JobListItemSkeleton } from './JobListItem';
-
-const jobService = new JobService();
 
 export function JobListSkeleton() {
 	const items = Array.from({ length: 2 });

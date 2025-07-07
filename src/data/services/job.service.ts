@@ -7,7 +7,7 @@ import JobsRepository from '../repositories/jobs.repository';
 import { IDType } from '../types';
 import Service from './service';
 
-export default class JobService extends Service {
+export class JobService extends Service {
 	constructor(private jobsRepository = new JobsRepository()) {
 		super();
 	}
@@ -40,3 +40,5 @@ export default class JobService extends Service {
 		return this.request(this.jobsRepository.registerApplication({ id }, payload));
 	}
 }
+
+export default new JobService();

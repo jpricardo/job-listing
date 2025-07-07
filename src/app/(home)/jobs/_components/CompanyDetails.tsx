@@ -1,12 +1,10 @@
 import { Typography } from '@jpricardo/component-library';
 import { notFound } from 'next/navigation';
 
-import CompanyService from '@/data/services/company.service';
+import companyService from '@/data/services/company.service';
 import { IDType } from '@/data/types';
 
 import CompanyAvatar, { CompanyAvatarSkeleton } from './CompanyAvatar';
-
-const companyService = new CompanyService();
 
 export function CompanyDetailsSkeleton() {
 	return (

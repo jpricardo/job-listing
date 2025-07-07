@@ -3,14 +3,11 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { getDateDifferenceInDays } from '@/app/_lib/helpers';
-import CompanyService from '@/data/services/company.service';
-import JobService from '@/data/services/job.service';
+import companyService from '@/data/services/company.service';
+import jobService from '@/data/services/job.service';
 import { IDType } from '@/data/types';
 
 import CompanyAvatar, { CompanyAvatarSkeleton } from '../../_components/CompanyAvatar';
-
-const jobService = new JobService();
-const companyService = new CompanyService();
 
 export function RelatedJobListItemSkeleton() {
 	return (

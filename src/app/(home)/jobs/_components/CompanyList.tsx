@@ -2,11 +2,9 @@ import { Typography } from '@jpricardo/component-library';
 import { Suspense } from 'react';
 
 import { Company } from '@/data/models/company.model';
-import CompanyService from '@/data/services/company.service';
+import companyService from '@/data/services/company.service';
 
 import CompanyListItem, { CompanyListItemSkeleton } from './CompanyListItem';
-
-const companyService = new CompanyService();
 
 export function CompanyListSkeleton() {
 	const items = Array.from({ length: 6 });

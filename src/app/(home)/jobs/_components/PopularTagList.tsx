@@ -1,9 +1,7 @@
 import { TagInfoDto } from '@/data/dto/tag-info.dto';
-import CompanyService from '@/data/services/company.service';
+import companyService from '@/data/services/company.service';
 
 import TagLink, { TagLinkSkeleton } from './TagLink';
-
-const companyService = new CompanyService();
 
 async function getTagSizes(tags: TagInfoDto[]) {
 	const map = new Map<number, string>();

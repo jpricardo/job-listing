@@ -4,12 +4,10 @@ import Form from 'next/form';
 import { notFound } from 'next/navigation';
 
 import { CreateJobApplicationDto } from '@/data/dto/create-job-application.dto';
-import JobService from '@/data/services/job.service';
+import jobService from '@/data/services/job.service';
 import { IDType } from '@/data/types';
 
 import ApplicationFormQuestion from './ApplicationFormQuestion';
-
-const jobService = new JobService();
 
 type Props = Readonly<{ jobId: IDType }>;
 

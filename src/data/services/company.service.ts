@@ -54,4 +54,5 @@ export class CompanyService extends Service {
 	}
 }
 
-export default new CompanyService();
+const companyService = new CompanyService();
+export default companyService;

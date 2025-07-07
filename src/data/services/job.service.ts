@@ -41,4 +41,5 @@ export class JobService extends Service {
 	}
 }
 
-export default new JobService();
+const jobService = new JobService();
+export default jobService;

@@ -36,7 +36,7 @@ export function match<T extends object>(target: T, matchers?: Partial<T>): boole
 			return matcher.includes(value);
 		}
 
-		return value === matcher;
+		return +value === +matcher;
 	});
 }
 

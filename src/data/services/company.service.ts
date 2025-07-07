@@ -1,123 +1,98 @@
 import 'server-only';
 
-import { getRandomSample } from '../helpers';
-import { Company } from '../models/company.model';
-import { TagInfo } from '../models/tag-info.model';
+import { TagInfoDto } from '../dto/tag-info.dto';
+import { getRandomNumber, getRandomSample, match } from '../helpers';
+import { Company, CompanyTypeEnum } from '../models/company.model';
 import { IDType } from '../types';
 import Service from './service';
 
-const tags: TagInfo[] = [
-	{ name: 'React', count: 10 },
-	{ name: 'Next', count: 5 },
-	{ name: 'Vue', count: 9 },
-	{ name: 'Frontend', count: 24 },
-	{ name: 'TypeScript', count: 15 },
-	{ name: 'JavaScript', count: 20 },
-	{ name: 'Node.js', count: 12 },
-	{ name: 'Express', count: 8 },
-	{ name: 'Angular', count: 7 },
-	{ name: 'Svelte', count: 4 },
-	{ name: 'GraphQL', count: 6 },
-	{ name: 'REST API', count: 14 },
-	{ name: 'MongoDB', count: 9 },
-	{ name: 'PostgreSQL', count: 11 },
-	{ name: 'AWS', count: 13 },
-	{ name: 'Docker', count: 14 },
-	{ name: 'CI/CD', count: 7 },
-	{ name: 'Python', count: 10 },
-	{ name: 'Figma', count: 5 },
-	{ name: 'UI/UX', count: 8 },
-	{ name: 'Mobile', count: 12 },
-	{ name: 'DevOps', count: 5 },
-	{ name: 'Scrum', count: 7 },
-	{ name: 'Jest', count: 5 },
-	{ name: 'Agile', count: 8 },
-	{ name: 'Kubernetes', count: 6 },
-	{ name: 'Microservices', count: 7 },
-	{ name: 'Redux', count: 9 },
-	{ name: 'SaaS', count: 5 },
-	{ name: 'PHP', count: 7 },
-	{ name: 'Laravel', count: 4 },
-	{ name: 'Go', count: 6 },
-	{ name: 'Ruby', count: 3 },
-	{ name: 'Rails', count: 3 },
-	{ name: 'C#', count: 5 },
-	{ name: '.NET', count: 4 },
-	{ name: 'Java', count: 12 },
-	{ name: 'Spring', count: 4 },
-	{ name: 'Machine Learning', count: 6 },
-	{ name: 'AI', count: 7 },
-	{ name: 'Testing', count: 5 },
-	{ name: 'Tailwind', count: 9 },
-	{ name: 'Bootstrap', count: 6 },
-	{ name: 'NoSQL', count: 4 },
-	{ name: 'Cloud', count: 7 },
-	{ name: 'API', count: 10 },
-	{ name: 'Security', count: 8 },
-	{ name: 'Big Data', count: 6 },
-	{ name: 'Data Science', count: 7 },
-	{ name: 'Analytics', count: 5 },
-	{ name: 'Design Systems', count: 4 },
-	{ name: 'WebSockets', count: 3 },
-	{ name: 'PWA', count: 4 },
-	{ name: 'Jenkins', count: 3 },
-	{ name: 'GCP', count: 5 },
-	{ name: 'Azure', count: 4 },
-	{ name: 'Shopify', count: 2 },
-	{ name: 'WordPress', count: 3 },
-	{ name: 'E-commerce', count: 6 },
-	{ name: 'Testing Automation', count: 4 },
-	{ name: 'RESTful', count: 7 },
-	{ name: 'Socket.io', count: 2 },
-	{ name: 'Material UI', count: 5 },
-	{ name: 'Storybook', count: 3 },
-	{ name: 'Unreal Engine', count: 1 },
-	{ name: 'Scala', count: 2 },
-	{ name: 'Elixir', count: 1 },
-	{ name: 'Rust', count: 3 },
-	{ name: 'C++', count: 4 },
-	{ name: 'C', count: 3 },
-	{ name: 'Perl', count: 1 },
-	{ name: 'Objective-C', count: 2 },
-	{ name: 'Swift', count: 5 },
-	{ name: 'Kotlin', count: 4 },
-	{ name: 'Android', count: 6 },
-	{ name: 'iOS', count: 5 },
-	{ name: 'Xamarin', count: 2 },
-	{ name: 'Cordova', count: 1 },
-	{ name: 'Electron', count: 3 },
-	{ name: 'Firebase', count: 4 },
-	{ name: 'Heroku', count: 2 },
-	{ name: 'DigitalOcean', count: 2 },
-	{ name: 'Terraform', count: 3 },
-	{ name: 'Ansible', count: 2 },
-	{ name: 'Puppet', count: 1 },
-	{ name: 'Chef', count: 1 },
-	{ name: 'Jira', count: 5 },
-	{ name: 'Confluence', count: 3 },
-	{ name: 'Notion', count: 4 },
-	{ name: 'Slack', count: 6 },
-	{ name: 'Trello', count: 3 },
-	{ name: 'Asana', count: 2 },
-	{ name: 'Power BI', count: 3 },
-	{ name: 'Tableau', count: 4 },
-	{ name: 'Snowflake', count: 2 },
-	{ name: 'Hadoop', count: 3 },
-	{ name: 'Spark', count: 2 },
-	{ name: 'Blockchain', count: 2 },
-	{ name: 'Django', count: 5 },
-	{ name: 'Flask', count: 4 },
-	{ name: 'ASP.NET', count: 3 },
-	{ name: 'Unity', count: 2 },
-	{ name: 'WebRTC', count: 2 },
-	{ name: 'GraphDB', count: 1 },
-	{ name: 'OpenAPI', count: 2 },
-	{ name: 'Sass', count: 4 },
-	{ name: 'Less', count: 2 },
-	{ name: 'Gatsby', count: 3 },
-	{ name: 'Three.js', count: 2 },
-	{ name: 'WebAssembly', count: 1 },
+const tags: string[] = [
+	'React',
+	'Next',
+	'Vue',
+	'Frontend',
+	'TypeScript',
+	'JavaScript',
+	'Node.js',
+	'Express',
+	'Angular',
+	'Svelte',
+	'Leadership',
+	'REST API',
+	'MongoDB',
+	'PostgreSQL',
+	'AWS',
+	'Docker',
+	'Project Management',
+	'Python',
+	'Figma',
+	'UI/UX',
+	'Mobile',
+	'DevOps',
+	'Scrum',
+	'Jest',
+	'Agile',
+	'Kubernetes',
+	'Microservices',
+	'Teamwork',
+	'SaaS',
+	'PHP',
+	'Laravel',
+	'Go',
+	'Ruby',
+	'Rails',
+	'C#',
+	'.NET',
+	'Java',
+	'Spring',
+	'Machine Learning',
+	'AI',
+	'Testing',
+	'Tailwind',
+	'Bootstrap',
+	'NoSQL',
+	'Cloud',
+	'API',
+	'Security',
+	'Big Data',
+	'Data Science',
+	'GCP',
+	'Azure',
+	'WordPress',
+	'Material UI',
+	'Rust',
+	'C++',
+	'C',
+	'Swift',
+	'Kotlin',
+	'Android',
+	'iOS',
+	'Electron',
+	'Terraform',
+	'Ansible',
+	'Jira',
+	'Confluence',
+	'Notion',
+	'Slack',
+	'Trello',
+	'Power BI',
+	'Tableau',
+	'Django',
+	'Flask',
+	'ASP.NET',
+	'Unity',
+	'Sass',
+	'Less',
+	'Gatsby',
+	'Three.js',
+	'WebAssembly',
 ];
+
+const allowedTags: string[] = getRandomSample(tags, 40);
+
+function getRandomTags() {
+	return getRandomSample(allowedTags, getRandomNumber(3, 6));
+}
 
 const companies = [
 	{
@@ -126,7 +101,7 @@ const companies = [
 		description:
 			'Brightwave Technologies is a leading provider of innovative digital solutions, specializing in web and mobile development, cloud services, and digital transformation for businesses of all sizes.',
 		type: CompanyTypeEnum.Hybrid,
-		tags: getRandomSample(tags, getRandomNumber(3, 6)).map((tag) => tag.name),
+		tags: getRandomTags(),
 	},
 
 	{
@@ -135,7 +110,7 @@ const companies = [
 		description:
 			'Nimbus Systems delivers reliable and scalable software products with a focus on seamless integration and user experience. Our remote-first culture empowers teams to collaborate globally.',
 		type: CompanyTypeEnum.RemoteFirst,
-		tags: getRandomSample(tags, getRandomNumber(3, 6)).map((tag) => tag.name),
+		tags: getRandomTags(),
 	},
 
 	{
@@ -144,7 +119,7 @@ const companies = [
 		description:
 			'CodeCrafters Collective is a fully remote company dedicated to building high-quality, maintainable software. We embrace modern technologies and agile methodologies to deliver value to our clients.',
 		type: CompanyTypeEnum.RemoteOnly,
-		tags: getRandomSample(tags, getRandomNumber(3, 9)).map((tag) => tag.name),
+		tags: getRandomTags(),
 	},
 
 	{
@@ -153,7 +128,7 @@ const companies = [
 		description:
 			'InnoVantage Solutions provides innovative solutions for modern businesses, helping organizations streamline operations and accelerate growth through technology and strategic consulting.',
 		type: CompanyTypeEnum.Hybrid,
-		tags: getRandomSample(tags, getRandomNumber(3, 6)).map((tag) => tag.name),
+		tags: getRandomTags(),
 	},
 	{
 		id: 5,
@@ -161,7 +136,7 @@ const companies = [
 		description:
 			'Digital Forge empowers digital transformation for enterprises by offering end-to-end IT services, from cloud migration to custom application development and ongoing support.',
 		type: CompanyTypeEnum.RemoteFirst,
-		tags: getRandomSample(tags, getRandomNumber(3, 6)).map((tag) => tag.name),
+		tags: getRandomTags(),
 	},
 	{
 		id: 6,
@@ -169,7 +144,7 @@ const companies = [
 		description:
 			'TechBridge Partners is your trusted tech partner, delivering tailored software solutions and IT consulting services to help businesses bridge the gap between technology and success.',
 		type: CompanyTypeEnum.RemoteOnly,
-		tags: getRandomSample(tags, getRandomNumber(3, 9)).map((tag) => tag.name),
+		tags: getRandomTags(),
 	},
 	{
 		id: 7,
@@ -177,7 +152,7 @@ const companies = [
 		description:
 			'AImpress Labs is building the future of AI with cutting-edge research and product development in artificial intelligence, machine learning, and automation for a smarter tomorrow.',
 		type: CompanyTypeEnum.Hybrid,
-		tags: getRandomSample(tags, getRandomNumber(3, 6)).map((tag) => tag.name),
+		tags: getRandomTags(),
 	},
 	{
 		id: 8,
@@ -185,7 +160,7 @@ const companies = [
 		description:
 			'Pixel & Code Studio is a design-driven development agency, blending creativity and technology to deliver stunning digital experiences for brands and startups worldwide.',
 		type: CompanyTypeEnum.RemoteFirst,
-		tags: getRandomSample(tags, getRandomNumber(3, 6)).map((tag) => tag.name),
+		tags: getRandomTags(),
 	},
 	{
 		id: 9,
@@ -193,7 +168,7 @@ const companies = [
 		description:
 			'CloudNest Solutions are cloud-native infrastructure experts, helping businesses migrate, optimize, and manage their cloud environments for maximum efficiency and security.',
 		type: CompanyTypeEnum.RemoteOnly,
-		tags: getRandomSample(tags, getRandomNumber(3, 9)).map((tag) => tag.name),
+		tags: getRandomTags(),
 	},
 	{
 		id: 10,
@@ -201,7 +176,7 @@ const companies = [
 		description:
 			'CommerceNext delivers next-gen e-commerce solutions, empowering retailers and brands to grow online with scalable platforms, seamless integrations, and data-driven strategies.',
 		type: CompanyTypeEnum.Hybrid,
-		tags: getRandomSample(tags, getRandomNumber(3, 6)).map((tag) => tag.name),
+		tags: getRandomTags(),
 	},
 ];
 
@@ -214,7 +189,19 @@ export default class CompanyService extends Service {
 		return this.request(companies.find((company) => company.id.toString() === id.toString()));
 	}
 
-	public async getPopularTags(limit = 50): Promise<TagInfo[]> {
-		return this.request(getRandomSample(tags, limit));
+	public async getPopularTags(limit: number): Promise<TagInfoDto[]> {
+		const tagsInUse = companies.flatMap((company) => company.tags);
+		const popularTags: TagInfoDto[] = [];
+
+		tagsInUse.forEach((tag, idx) => {
+			if (idx >= limit) return;
+
+			const tagInfo = popularTags.find((info) => info.name === tag);
+
+			if (tagInfo) return tagInfo.count++;
+			popularTags.push({ name: tag, count: 1 });
+		});
+
+		return this.request(popularTags);
 	}
 }

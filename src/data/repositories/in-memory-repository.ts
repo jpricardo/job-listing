@@ -3,10 +3,10 @@ import 'server-only';
 import { timer } from '../helpers';
 
 export default abstract class InMemoryRepository {
-	private maxAge = 5 * 60 * 1000;
+	protected maxAge = 5 * 60 * 1000;
 
-	protected agesMap = new Map<string, Date | null>();
-	protected valuesMap = new Map<string, unknown>();
+	private agesMap = new Map<string, Date | null>();
+	private valuesMap = new Map<string, unknown>();
 
 	protected async cache<T>(key: unknown[], cb: () => T): Promise<T> {
 		const stringifiedKey = JSON.stringify(key);

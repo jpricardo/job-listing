@@ -12,7 +12,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"cypress:open": "cypress open"
 	},
 	"dependencies": {
 		"@jpricardo/component-library": "^1.0.3-alpha",
@@ -30,6 +31,7 @@
 		"@types/node": "^22",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"cypress": "^14.5.1",
 		"eslint": "^9",
 		"eslint-config-next": "15.3.2",
 		"eslint-config-prettier": "^10.1.5",

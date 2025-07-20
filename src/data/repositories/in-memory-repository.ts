@@ -3,6 +3,8 @@ import 'server-only';
 import { timer } from '../helpers';
 
 export default abstract class InMemoryRepository {
+	// Simulating a very slow operation
+	private delay = process.env.NODE_ENV === 'test' ? 0 : 2000;
 	protected maxAge = 5 * 60 * 1000;
 
 	private agesMap = new Map<string, Date | null>();
@@ -17,8 +19,7 @@ export default abstract class InMemoryRepository {
 
 		if (isStale) {
 			console.log(stringifiedKey, 'stale!');
-			// Simulating a very slow operation
-			await timer(2000);
+			await timer(this.delay);
 
 			const result = cb();
 
